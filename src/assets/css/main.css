@@ -1,0 +1,142 @@
+/* CSS - MAIN */
+/* This is the main css file */
+
+
+/* index */
+
+.index-wrapper {
+    height: fit-content !important;
+    padding: 5em 0 18em 0;
+}
+
+.index-content {
+    padding-top: 5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    color: white;
+}
+
+.index-content h1 {
+    font-weight: 700;
+}
+
+.index-content h4 {
+    font-weight: 500;
+}
+
+.index-form {
+    display: flex;
+}
+
+
+.index-input-box {
+    border: 3px solid rgb(228, 228, 228);
+    background-color: rgb(255, 255, 255, 0.1);
+    border-radius: 9px;
+    display: flex;
+    flex-direction: column;
+    height: 4.3em;
+    padding: 0.2em 0.7em;
+}
+
+.index-input-box label {
+    font-size: 0.8em;
+    margin-bottom: -0.5em;
+    margin-left: 0.5em;
+}
+
+.index-input-box input {
+    color: white;
+    background-color: rgb(255, 255, 255, 0) !important;
+    box-shadow: none;
+    width: 25em;
+    border-radius: 0;
+    height: 5em !important;
+    outline: none;
+    font-weight: 600;
+
+}
+
+
+
+
+
+/* login */
+
+
+.login-wrapper {
+    height: fit-content !important;
+    padding: 3em 0 18em 0;
+
+}
+
+.page-content {
+    padding: 3em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    width: 25em;
+    border: 1px solid black;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 6px;
+    color: white;
+}
+
+
+
+.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.music-controls-menu {
+    padding: 0.8em 5em;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.music-controls-menu button {
+    height: 3.5em;
+    width: 3.5em;
+    border-radius: 50%;
+    background-color: black;
+    padding: 0.6em 0.9em;
+    border: 0.5px solid white;
+    margin-left: 0.5em;
+    transition: 0.2s;
+}
+
+.music-controls-menu button:hover {
+    background-color: rgb(29, 23, 23);
+    padding: 0.5em 0.9em;
+    border: 0.5px solid rgb(170, 170, 170);
+}
+
+
+
+/* newaccount */
+
+.newaccount-wrapper {
+    height: fit-content !important;
+    padding: 3em 0 18em 0;
+}
+
+
+
+/* home */
+
+.home-wrapper {
+    height: fit-content !important;
+    padding: 5em 0 18em 0;
+}

@@ -1,0 +1,112 @@
+.header {
+    /* background-color: rgb(0, 0, 0); */
+    color: rgb(238, 238, 238);
+}
+
+.navbar-toggle-icon {
+    color: rgb(255, 255, 255) !important;
+}
+
+button.navbar-toggler:active,
+button.navbar-toggler:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.navbar-toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.navbar-toggle-icon.rotate {
+    transform: rotate(90deg);
+}
+
+
+.navbar-brand-link {
+    font-weight: 800;
+    font-size: 1.6em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-right: 1em;
+    color: white !important;
+    transition: 0.2s;
+    text-shadow: 0 0 20px rgba(254, 254, 254, 0);
+}
+
+.navbar-brand-link:hover {
+    /* color: rgb(112, 112, 112) !important; */
+    text-shadow: 0 0 25px rgba(254, 254, 254, 0.9);
+
+}
+
+.header-link {
+    color: rgb(255, 255, 255) !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-bottom: 1px solid rgba(190, 190, 190, 0);
+    transition: 0.2s;
+    font-size: 1em;
+    margin-top: 0.5em;
+}
+
+.header-link:hover {
+    color: rgb(205, 205, 205) !important;
+    border-bottom: 1px solid rgba(190, 190, 190, 1);
+    transition: 0.5s;
+}
+
+.logo-img {
+    width: 1.5em;
+    margin-bottom: 0.3em;
+    margin-left: 0.4em;
+}
+
+
+@media (min-width: 991px) {
+    .header {
+        height: 5em;
+    }
+
+    .header-link {
+        margin-left: 1.5em;
+    }
+}
+
+
+@media (max-width: 991px) {
+    .header {
+        padding-right: 2em;
+    }
+
+    .navbar-nav {
+        padding: 2em 0;
+        /* border-bottom: 0.5px rgb(161, 161, 161) solid; */
+        height: 50vh;
+    }
+
+    .navbar-collapse {
+        height: 0;
+        overflow: hidden;
+        transition: height 0.2s ease;
+    }
+
+    .navbar-collapse.show {
+        /* height: 50vh; */
+        height: fit-content;
+    }
+
+    .header-link {
+        margin-right: 1em;
+        padding: 0.7em 0.1em 0.7em 0.7em;
+        text-align: right;
+        font-weight: 700;
+        font-size: 1.1em;
+        border-bottom: none;
+        transition: 0.2s;
+    }
+
+    .header-link:hover {
+        color: rgb(159, 159, 159) !important;
+        border-bottom: none;
+        padding: 0.7em 0.4em 0.7em 0.7em;
+        transition: 0.5s;
+    }
+}
