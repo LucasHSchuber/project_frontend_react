@@ -46,6 +46,9 @@ function Header() {
             <Nav.Link as={Link} to="/home" className='header-link' onClick={handleLinkClick}>
               Home
             </Nav.Link>
+            <Nav.Link as={Link} to="/logout" className='header-link' onClick={handleLinkClick}>
+              Logout
+            </Nav.Link>
             {/* <Nav.Link as={Link} to="/additem" className='header-link'onClick={handleLinkClick}>
               Lägg till
             </Nav.Link>

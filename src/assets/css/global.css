@@ -18,3 +18,7 @@ input {
     border: none;
     width: 18em;
 }
+.error{
+    color:rgb(255, 59, 59);
+    font-weight: 600;
+}

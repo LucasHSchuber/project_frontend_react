@@ -21,3 +21,22 @@
     box-shadow: 0 0 10px 2px rgba(254, 254, 254, 0.1);
     /* border: 1px solid rgb(63, 63, 63); */
 }
+
+.gradient-button{
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    background-image: linear-gradient(to right, #593F47, #235571, #EFBF81);
+    color: white;
+    transition: 0.2s;
+    border-radius: 5px;
+}
+.gradient-button:hover {
+    background-image: linear-gradient(to right, #66444e, #3a6a85, #edc693);
+  }
+
+  

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-ro
 //components include
 import Index from './components/mainComponents/indexComponent';
 import Login from './components/mainComponents/loginComponent';
+import Logout from './components/mainComponents/logoutComponent';
 import Newaccount from './components/mainComponents/newaccountComponent';
 import Header from "./components/headerComponents/headerComponent";
 import Footer from "./components/footerComponents/footerComponent";
@@ -40,6 +41,11 @@ function App() {
             <div className='container'>
               <Routes>
                 <Route path="/home" element={<Home />} />
+              </Routes>
+            </div>
+            <div className=''>
+              <Routes>
+                <Route path="/logout" element={<Logout />} />
               </Routes>
             </div>
 

@@ -2,6 +2,39 @@
 /* This is the main css file */
 
 
+/* logout */
+
+.logout-wrapper{
+    background-color: black;
+    color:white;
+    text-align: center;
+    padding: 8em 0;
+}
+
+/* Custom styles for the BeatLoader */
+.MoonLoader {
+    display: inline-block;
+    border: 4px solid #f1f1f1 !important;
+    border-radius: 50%;
+    border-top: 4px solid transparent;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+
+
 /* index */
 
 .index-wrapper {
@@ -123,6 +156,29 @@
     border: 0.5px solid rgb(170, 170, 170);
 }
 
+.create-account-section {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  .create-account-section p {
+    margin-bottom: 10px;
+  }
+  
+  .create-account-link {
+    color: #3496ff; 
+    text-decoration: none;
+    list-style-type: none;
+    margin-top: -1em;
+    margin-left: -1em;
+
+  }
+  
+  .create-account-link:hover {
+    color: #9ecdff; 
+    text-decoration: underline;
+  }
+  
 
 
 /* newaccount */
@@ -139,4 +195,8 @@
 .home-wrapper {
     height: fit-content !important;
     padding: 5em 0 18em 0;
+}
+
+.audio-image {
+    width: 10em;
 }
