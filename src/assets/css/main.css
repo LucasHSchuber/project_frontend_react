@@ -4,9 +4,9 @@
 
 /* logout */
 
-.logout-wrapper{
-    background-color: black;
-    color:white;
+.logout-wrapper {
+    /* background-color: black; */
+    color: white;
     text-align: center;
     padding: 8em 0;
 }
@@ -39,11 +39,12 @@
 
 .index-wrapper {
     height: fit-content !important;
-    padding: 5em 0 18em 0;
+    padding: 5em 0 0em 0;
 }
 
-.index-content {
+.index-hero {
     padding-top: 5em;
+    padding-bottom: 25em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,11 +52,11 @@
     color: white;
 }
 
-.index-content h1 {
+.index-hero h1 {
     font-weight: 700;
 }
 
-.index-content h4 {
+.index-hero h4 {
     font-weight: 500;
 }
 
@@ -63,6 +64,14 @@
     display: flex;
 }
 
+.index-content {
+    background-color: rgba(15, 15, 15, 0.7);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    color: white;
+}
 
 .index-input-box {
     border: 3px solid rgb(228, 228, 228);
@@ -159,26 +168,26 @@
 .create-account-section {
     margin-top: 20px;
     text-align: left;
-  }
-  
-  .create-account-section p {
+}
+
+.create-account-section p {
     margin-bottom: 10px;
-  }
-  
-  .create-account-link {
-    color: #3496ff; 
+}
+
+.create-account-link {
+    color: #3496ff;
     text-decoration: none;
     list-style-type: none;
     margin-top: -1em;
     margin-left: -1em;
 
-  }
-  
-  .create-account-link:hover {
-    color: #9ecdff; 
+}
+
+.create-account-link:hover {
+    color: #9ecdff;
     text-decoration: underline;
-  }
-  
+}
+
 
 
 /* newaccount */
@@ -195,8 +204,57 @@
 .home-wrapper {
     height: fit-content !important;
     padding: 5em 0 18em 0;
+    background-color: #141414 !important;
 }
 
 .audio-image {
     width: 10em;
+}
+
+
+/* chooseavatar */
+
+.avatar-wrapper {
+    height: fit-content !important;
+    padding: 5em 0 18em 0;
+}
+
+.avatar-content {
+    padding: 3em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    width: 25em;
+    border: 1px solid black;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 6px;
+    color: white;
+}
+
+.avatar-image-box {
+    min-width: 5.5em !important;
+    min-height: 6em;
+
+}
+
+.avatar-image {
+    width: 5em !important;
+    height: 5em !important;
+    opacity: 1;
+    cursor: pointer;
+    transition: 0.2s !important;
+}
+
+.avatar-image:hover {
+    height: 5.1em !important;
+    width: 5.1em !important;
+    opacity: 0.8;
+}
+
+.selected-avatar {
+    height: 5.1em !important;
+    width: 5.1em !important;
+    opacity: 1 !important;
+    transition: 0.1s !important;
 }

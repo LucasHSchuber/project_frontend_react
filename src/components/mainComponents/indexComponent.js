@@ -27,6 +27,7 @@ function Index() {
 
 
 
+    
     const checkEmail = async (e) => {
         e.preventDefault();
 
@@ -57,7 +58,7 @@ function Index() {
 
             <img src={img1} className="bg-video" alt='bg video' style={{ opacity: '0.9' }}></img>
 
-            <div className='index-content'>
+            <div className='index-hero'>
                 <h1 className='my-3'>Unlimited meditations, whenever and wherever you want.</h1>
                 <h4 className='mb-4'>Ready to start? Enter you're email to create or login to your account.</h4>
 
@@ -77,7 +78,9 @@ function Index() {
                 </form>
             </div>
 
-            <div class="">
+            <div class="index-content">
+                <h1>Test</h1>
+                <p>test</p>
             </div>
 
         </div>

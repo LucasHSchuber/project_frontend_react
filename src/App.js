@@ -10,6 +10,7 @@ import Newaccount from './components/mainComponents/newaccountComponent';
 import Header from "./components/headerComponents/headerComponent";
 import Footer from "./components/footerComponents/footerComponent";
 import Home from "./components/mainComponents/homeComponent";
+import ChooseAvatar from "./components/mainComponents/chooseavatarComponent";
 
 
 //import css
@@ -23,7 +24,7 @@ function App() {
           <Header />
           <div className="">
 
-            <div className='container'>
+            <div className=''>
               <Routes>
                 <Route path="/index" element={<Index />} />
               </Routes>
@@ -38,7 +39,7 @@ function App() {
                 <Route path="/newaccount" element={<Newaccount />} />
               </Routes>
             </div>
-            <div className='container'>
+            <div className=''>
               <Routes>
                 <Route path="/home" element={<Home />} />
               </Routes>
@@ -46,6 +47,11 @@ function App() {
             <div className=''>
               <Routes>
                 <Route path="/logout" element={<Logout />} />
+              </Routes>
+            </div>
+            <div className='container'>
+              <Routes>
+                <Route path="/chooseavatar" element={<ChooseAvatar />} />
               </Routes>
             </div>
 

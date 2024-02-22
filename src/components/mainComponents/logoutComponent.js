@@ -6,6 +6,9 @@ import { PulseLoader } from 'react-spinners';
 import { MoonLoader } from 'react-spinners';
 import { RingLoader } from 'react-spinners';
 
+//define images
+import img1 from '../../assets/images/space2.jpg';
+
 
 
 function Logout() {
@@ -16,16 +19,18 @@ function Logout() {
     useEffect(() => {
         // Function to logout user and remove token from sessionStorage
         const logoutUser = () => {
-            // Remove token from sessionStorage
+            // Remove from sessionStorage
             sessionStorage.removeItem('token');
-
             let token = sessionStorage.getItem("token");
             console.log(token);
+            sessionStorage.removeItem('userid');
+            let userid = sessionStorage.getItem("userid");
+            console.log(userid);
 
             setTimeout(() => {
                 setLoading(false);
                 Navigate('/index');
-            }, 1500);
+            }, 2000);
         };
 
         // Call the logout function when the component mounts
@@ -36,6 +41,8 @@ function Logout() {
 
     return (
         <div className='logout-wrapper'>
+            <img src={img1} className="bg-video" alt='bg video' style={{ opacity: '0.9' }}></img>
+
             <div className="" style={{ height: '100vh' }}>
                 <h4 className="mt-3 mb-4">Signing out</h4>
                 <div>

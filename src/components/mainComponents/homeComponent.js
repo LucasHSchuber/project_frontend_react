@@ -44,12 +44,12 @@ function Home() {
 
     console.log(`${URL}/imgupload/${audios.ImageName}`);
 
-
+    
 
     return (
         <div className='home-wrapper' id="home-wrapper" >
 
-            <img src={img1} className="bg-video" alt='bg video' style={{ opacity: '0.9' }}></img>
+            {/* <img src={img1} className="bg-video" alt='bg video' style={{ opacity: '0.9' }}></img> */}
 
             <div className='home-content'>
 
@@ -58,7 +58,7 @@ function Home() {
                         <h3>{audio.title}</h3>
                         <h3>{audio.description}</h3>
                         <audio class="audio my-4" controls src={`${URL}/audioupload/${audio.filePath}`}></audio>
-                        <img className='audio-image' src={`${URL}/imgupload/${audio.imageName}`} alt="test" />
+                        <img className='audio-image' src={`${URL}/imgupload/${audio.imageName}`} alt={audio.audioID} />
                     </div>
                 ))}
             </div>

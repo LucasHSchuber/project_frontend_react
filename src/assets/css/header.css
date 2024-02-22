@@ -3,6 +3,14 @@
     color: rgb(238, 238, 238);
 }
 
+.nav-loggedin {
+    margin-top: 0.2em !important;
+}
+
+.loggedin {
+    background-color: #141414 !important;
+}
+
 .navbar-toggle-icon {
     color: rgb(255, 255, 255) !important;
 }
@@ -45,6 +53,7 @@ button.navbar-toggler:focus {
     transition: 0.2s;
     font-size: 1em;
     margin-top: 0.5em;
+    height: fit-content !important
 }
 
 .header-link:hover {
@@ -57,6 +66,20 @@ button.navbar-toggler:focus {
     width: 1.5em;
     margin-bottom: 0.3em;
     margin-left: 0.4em;
+}
+
+.header-avatar-image {
+    width: 2.2em !important;
+    transition: 0.2s;
+}
+
+.header-avatar-image:hover {
+    opacity: 0.8;
+}
+
+/* removing the little arrow down icon */
+.dropdown-toggle::after {
+    display: none;
 }
 
 

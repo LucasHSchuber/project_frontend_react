@@ -16,7 +16,7 @@ import mp4 from '../../assets/videos/lines.mp4';
 import img1 from '../../assets/images/space2.jpg';
 
 // Importing api url and enpoints
-import { URL, USER_ENDPOINT } from '../../api';
+import { URL, USER_ENDPOINT, AVATAR_ENDPOINT } from '../../api';
 
 //import css
 import '../../assets/css/main.css';
@@ -174,14 +174,36 @@ function Login() {
       console.log(response.data);
       setEmail("")
       setPassword("");
-      //store token in localstorage
-      let token = response.data;
+      //store token and userid in localstorage
+      let token = response.data.token;
       sessionStorage.setItem("token", token);
-      //redirect user to home
-      Navigate('/home');
+      let userid = response.data.userId;
+      sessionStorage.setItem("userid", userid);
+
+      //redirect user to home or ChooseAvatar
+      if (response.data.avatarId == null && response.data.imageName == null) {
+        chooseAvatar();
+        Navigate("/chooseavatar");
+      } else {
+        Navigate('/home');
+      }
+
     } catch (error) {
       console.log(error);
       setError(error.response.data);
+    }
+
+  }
+
+
+  const chooseAvatar = async () => {
+
+    try {
+
+      const response = await axios.get(`${URL}/${AVATAR_ENDPOINT}`);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
     }
 
   }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Howl } from 'howler';
 
@@ -14,7 +14,7 @@ import mp4 from '../../assets/videos/lines.mp4';
 import img1 from '../../assets/images/space2.jpg';
 
 // Importing api url and enpoints
-import { URL, USER_ENDPOINT } from '../../api';
+import { URL, USER_ENDPOINT, AVATAR_ENDPOINT } from '../../api';
 
 //import css
 import '../../assets/css/main.css';
@@ -31,6 +31,8 @@ function Newaccount() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rpassword, setRPassword] = useState("");
+
+  const Navigate = useNavigate();
 
 
 
@@ -54,11 +56,27 @@ function Newaccount() {
       });
       console.log(response.data);
 
+      Navigate("/login");
+
     } catch (error) {
       console.log(error);
     }
-
   }
+
+
+  // const chooseAvatar = async () => {
+
+  //   try {
+
+  //     const response = await axios.get(`${URL}/${AVATAR_ENDPOINT}`);
+  //     console.log(response.data);
+
+
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+
+  // }
 
 
 
