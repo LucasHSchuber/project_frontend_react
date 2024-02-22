@@ -3,6 +3,8 @@ import { Navbar, Nav, Container, NavDropdown, Form, FormControl, Button } from '
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Howl } from 'howler';
+import { useLocation } from 'react-router-dom';
+
 
 //import sounds
 import mp3 from '../../assets/sounds/click2.mp3';
@@ -32,10 +34,7 @@ function Login() {
 
   const [error, setError] = useState("");
 
-
-
   const Navigate = useNavigate();
-
 
 
 
@@ -227,7 +226,7 @@ function Login() {
             name="password"
           ></input>
 
-          <button className="gradient-button my-3" type='sumbit'>Login</button>
+          <button className="gradient-button my-3" type='submit'>Login</button>
 
           <div className="create-account-section">
             <p>Don't have an account? Don't worry.</p>
