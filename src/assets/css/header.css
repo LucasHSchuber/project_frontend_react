@@ -82,6 +82,44 @@ button.navbar-toggler:focus {
     display: none;
 }
 
+.fa-caret-down {
+    transition: transform 0.3s ease;
+}
+
+.fa-caret-down.rotate {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    background-color: rgb(19, 19, 19, 0.8) !important;
+    border: rgb(57, 57, 57) solid 1px;
+    border-radius: 1px !important;
+    padding: 1em 0.5em 1em 0.5em;
+    width: 14em !important;
+}
+
+.dropdown-item {
+    color: white !important;
+    font-size: 0.9em;
+}
+
+.dropdown-item:hover {
+    color: white !important;
+    background-color: inherit;
+    text-decoration: underline;
+}
+
+.dropdown-item-icon {
+    width: 1.5em;
+    margin-right: 0.8em;
+}
+
+.hr {
+    border: rgb(44, 44, 44) solid 1px;
+    margin-top: 0.6em !important;
+    margin-bottom: 0.6em !important;
+}
+
 
 @media (min-width: 991px) {
     .header {

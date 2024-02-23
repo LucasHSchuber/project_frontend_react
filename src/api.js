@@ -7,5 +7,7 @@ export const URL = 'http://localhost:5111'
 export const AUDIO_ENDPOINT = "api/audioapi";
 export const USER_ENDPOINT = 'api/userapi';
 export const AVATAR_ENDPOINT = 'api/avatarapi';
+export const USERLIST_ENDPOINT = 'api/userlistapi';
+export const USERAUDIO_ENDPOINT = 'api/useraudioapi';
 
 // Add other endpoints as needed

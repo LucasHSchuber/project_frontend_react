@@ -11,6 +11,7 @@ import Header from "./components/headerComponents/headerComponent";
 import Footer from "./components/footerComponents/footerComponent";
 import Home from "./components/mainComponents/homeComponent";
 import ChooseAvatar from "./components/mainComponents/chooseavatarComponent";
+import Mylist from "./components/mainComponents/mylistComponent"
 
 
 //import css
@@ -52,6 +53,11 @@ function App() {
             <div className='container'>
               <Routes>
                 <Route path="/chooseavatar" element={<ChooseAvatar />} />
+              </Routes>
+            </div>
+            <div className=''>
+              <Routes>
+                <Route path="/mylist" element={<Mylist />} />
               </Routes>
             </div>
 
