@@ -109,28 +109,36 @@ function Home() {
 
     return (
         <div className='home-wrapper' id="home-wrapper" >
-            <div className='home-content'>
+
+            <div className="audio-cards-container">
                 {audios.map((audio) => (
-                    <div key={audio.audioID}>
-                        <h3>{audio.title}</h3>
-                        <h3>{audio.description}</h3>
-                        <audio className="audio my-4" controls src={`${URL}/audioupload/${audio.filePath}`}></audio>
-                        <img className='audio-image' src={`${URL}/imgupload/${audio.imageName}`} alt={audio.audioID} />
-                        <p>{audio.audioID}</p>
-                        <button
-                            // value={audio.audioID}
-                            onClick={() => { userAudioIDs.includes(audio.audioID) ? removeFromList(audio.audioID) : addToList(audio.audioID) }}
-                        >
-                            {userAudioIDs.includes(audio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
-                        </button>
+                    <div key={audio.audioID} className="audio-card">
+                        <div className="audio-image" style={{ backgroundImage: `url(${URL}/imgupload/${audio.imageName})` }}>
+                            <audio className="audio" controls src={`${URL}/audioupload/${audio.filePath}`}></audio>
+                            <h5 className='text'>{audio.title}</h5>
+                            <p className='text'>{audio.categoryName}</p>
+                        </div>
+                        <div className="audio-details">
+                            <h3>{audio.title}</h3>
+                            <p>{audio.description}</p>
+                            <div className='d-flex'>
+                                <button
+                                    className='addtolist-button'
+                                    // value={audio.audioID}
+                                    onClick={() => { userAudioIDs.includes(audio.audioID) ? removeFromList(audio.audioID) : addToList(audio.audioID) }}
+                                >
+                                    {userAudioIDs.includes(audio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
+                                </button>
+                                <button
+                                    className='addtolist-button'
+                                >
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+
+                            </div>
+                        </div>
                     </div>
                 ))}
-            </div>
-
-            <div>
-                {userAudioIDs.map((liked) =>
-                    <div key={liked.userAudioId}>{liked.audioId}</div>
-                )}
             </div>
 
             <div className="">
