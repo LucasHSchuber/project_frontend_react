@@ -115,8 +115,10 @@ function Home() {
                     <div key={audio.audioID} className="audio-card">
                         <div className="audio-image" style={{ backgroundImage: `url(${URL}/imgupload/${audio.imageName})` }}>
                             <audio className="audio" controls src={`${URL}/audioupload/${audio.filePath}`}></audio>
-                            <h5 className='text'>{audio.title}</h5>
-                            <p className='text'>{audio.categoryName}</p>
+                            <div className='audio-image-text'>
+                                <h5 className='text'>{audio.title}</h5>
+                                <p className='text'>{audio.categoryName}</p>
+                            </div>
                         </div>
                         <div className="audio-details">
                             <h3>{audio.title}</h3>

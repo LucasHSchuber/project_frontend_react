@@ -5,7 +5,7 @@ import axios from 'axios';
 
 //import css
 import '../../assets/css/header.css';
-// import logo from '../../assets/images/mountain2.png';
+import logo from '../../assets/images/pray.png';
 
 // Importing api url and enpoints
 import { URL, USER_ENDPOINT, AVATAR_ENDPOINT } from '../../api';
@@ -83,8 +83,8 @@ function Header() {
         <Navbar.Brand>
           {token ? (
             <Nav.Link as={Link} to="/home" className='navbar-brand-link' >
+              <img className="logo-img" src={logo} alt="logo img" ></img>
               MindSpace
-              {/* <img className="logo-img" src={logo} alt="logo img" ></img> */}
             </Nav.Link>
           ) : (
             <Nav.Link as={Link} to="/index" className='navbar-brand-link' >
@@ -137,7 +137,7 @@ function Header() {
                 >
                   {user.avatar ? (
                     <>
-                      <NavDropdown.Item as={Link} to="/home"><img src={userImg} alt="user img" className='dropdown-item-icon'></img>Your account</NavDropdown.Item>
+                      <NavDropdown.Item as={Link} to="/myaccount"><img src={userImg} alt="user img" className='dropdown-item-icon'></img>Your account</NavDropdown.Item>
                       <NavDropdown.Item as={Link} to="/mylist"><img src={mylistImg} alt="mylist img" className='dropdown-item-icon'></img>My list</NavDropdown.Item>
                       <NavDropdown.Item as={Link} to="/home"><img src={favoritesImg} alt="favorites img" className='dropdown-item-icon'></img>Favorites</NavDropdown.Item>
                       {/* <NavDropdown.Item as={Link} to="/home"><img src={settingsImg} alt="settings img" className='dropdown-item-icon'></img>Settings</NavDropdown.Item> */}

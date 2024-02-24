@@ -291,6 +291,19 @@
     transition: height 0.3s ease;
 }
 
+.audio-image-text {
+    padding-left: 1em;
+}
+
+.audio-image-text h5 {
+    font-weight: 700;
+}
+
+.audio-image-text p {
+    font-size: 0.9em;
+    font-style: italic;
+}
+
 .audio-card:hover .audio-image {
     height: 40px;
 }
@@ -319,9 +332,11 @@
 .audio-card:hover .audio {
     opacity: 7;
 }
+
 .audio-card .text {
     transition: 0.4s ease;
 }
+
 .audio-card:hover .text {
     opacity: 0;
     transition: opacity 0.2s ease;
@@ -333,4 +348,116 @@
 
 .audio-details p {
     font-size: 0.75em;
+}
+
+
+
+
+
+/* myaccount - My account */
+
+.myaccount-wrapper {
+    height: fit-content !important;
+    padding: 1em 0 18em 0;
+    background-color: #f6f6f6 !important;
+    color: rgb(79, 79, 79) !important;
+}
+
+.personal-info-section {
+    color: rgb(79, 79, 79) !important;
+}
+
+.personal-info-labels {
+    flex: 1;
+    text-align: left;
+    margin-left: 10%;
+    color: rgb(79, 79, 79) !important;
+}
+
+.personal-info-labels .form-group label {
+    color: rgb(79, 79, 79) !important;
+    padding-top: 0.5em;
+    height: 1em;
+}
+
+.personal-info-labels .form-group p span {
+    font-weight: 700;
+    font-size: 0.9em;
+}
+
+.personal-info-values .form-group input {
+    margin-top: 0.2em;
+}
+
+.account-input {
+    height: 2em !important;
+    width: 100%;
+}
+
+.account-textarea {
+    height: 6em !important;
+    width: 100%;
+}
+
+.personal-info-values {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.personal-info-actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.settings-avatar-image {
+    width: 4em !important;
+    transition: 0.2s;
+}
+
+.modal-header {
+    background-color: rgba(0, 0, 0, 0);
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+}
+
+.modal-content {
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-title {
+    color: #fff;
+}
+
+.modal-body {
+    padding: 1em 4em;
+}
+
+
+.avatar-image-box {
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.avatar-image {
+    width: 5em;
+    height: 5em;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.9);
+    transition: box-shadow 0.3s ease;
+}
+
+.selected-avatar {
+    filter: brightness(100%);
+}
+
+
+@media (max-width: 768px) {
+    .personal-info-labels {
+        margin-left: 0;
+    }
+
+
 }

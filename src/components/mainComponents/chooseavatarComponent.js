@@ -109,7 +109,7 @@ function ChooseAvatar() {
                             <img className={`avatar-image ${chosenAvatar === avatar.avatarId ? 'selected-avatar' : ''}`} src={`${URL}/imgupload/${avatar.avatarImageName}`} alt={avatar.avatarId}
                                 style={{
                                     filter: chosenAvatar === avatar.avatarId ? 'brightness(100%) drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.9))' : 'none',
-                                    transition: 'filter 0.3s ease', // Add a transition for smoother effect
+                                    transition: 'filter 0.3s ease', 
                                 }}
                             />
                         </div>

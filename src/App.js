@@ -12,6 +12,7 @@ import Footer from "./components/footerComponents/footerComponent";
 import Home from "./components/mainComponents/homeComponent";
 import ChooseAvatar from "./components/mainComponents/chooseavatarComponent";
 import Mylist from "./components/mainComponents/mylistComponent"
+import Myaccount from "./components/mainComponents/myaccountComponent"
 
 
 //import css
@@ -58,6 +59,11 @@ function App() {
             <div className=''>
               <Routes>
                 <Route path="/mylist" element={<Mylist />} />
+              </Routes>
+            </div>
+            <div className=''>
+              <Routes>
+                <Route path="/myaccount" element={<Myaccount />} />
               </Routes>
             </div>
 

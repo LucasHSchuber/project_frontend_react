@@ -1,5 +1,6 @@
 /* global */
 
+
 button,
 input {
     color: black;
@@ -18,7 +19,14 @@ input {
     border: none;
     width: 18em;
 }
-.error{
-    color:rgb(255, 59, 59);
+
+.error {
+    color: rgb(255, 59, 59);
     font-weight: 600;
+}
+
+.hr {
+    border: rgb(44, 44, 44, 0.1) solid 0.5px !important;
+    margin-top: 0.6em !important;
+    margin-bottom: 0.6em !important;
 }
