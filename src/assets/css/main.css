@@ -222,7 +222,7 @@
     background-size: cover;
     background-position: center;
     position: relative;
-    padding-left: 20% !important;
+    /* padding-left: 20% !important; */
 }
 
 .hero-details {
@@ -238,7 +238,7 @@
 .hero-part-details {
     opacity: 1;
     height: 5em;
-    transition: opacity 5s ease, height 2s ease;
+    transition: opacity 3.8s ease, height 2s ease;
 }
 
 .hero-part-details.hidden {
@@ -254,18 +254,20 @@
 }
 
 .soundwave-gif {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 1em;
-    align-items: center;
-    background-color: inherit;
-    border-radius: 50%;
-    border: 1px solid rgba(92, 92, 92, 0.8);
-    background-color: rgb(219, 219, 219);
-    color: white;
-    width: 72px;
-    height: 70px;
-    transition: 0.2s;
+    /* display: flex;
+    justify-content: center; */
+    /* padding-bottom: 2em; */
+    /* align-items: center;
+    background-color: inherit; */
+    /* border-radius: 50%; */
+    /* border: 1px solid rgba(92, 92, 92, 0.8);
+    background-color: rgb(219, 219, 219); */
+    /* color: white; */
+    /* width: 72px;
+    height: 70px; */
+    /* padding: 1em 1em; */
+
+
 }
 
 /* modal */
@@ -321,8 +323,10 @@
 @media (min-width: 1500px) {
     .hero-details {
         left: 20%;
-        margin-left: 5em !important;
+        padding-left: 5em !important;
         padding-right: 5em !important;
+        padding-bottom: 1em;
+        padding-top: 1em;
         width: 30em;
     }
 
@@ -335,7 +339,7 @@
 @media (max-width: 1500px) {
     .hero-details {
         left: 20%;
-        margin-left: 5em !important;
+        padding-left: 5em !important;
         padding-right: 5em !important;
         width: 30em;
     }
@@ -371,7 +375,7 @@
 
 @media (max-width: 473px) {
     .hero-details {
-        left: 43%;
+        left: 30%;
     }
 }
 
@@ -526,8 +530,8 @@
 
 .myaccount-wrapper {
     height: fit-content !important;
-    padding: 1em 0 18em 0;
-    background-color: #f6f6f6 !important;
+    padding: 1em 10em 18em 10em;
+    background-color: rgb(244, 244, 244) !important;
     color: rgb(79, 79, 79) !important;
 }
 
@@ -535,50 +539,52 @@
     color: rgb(79, 79, 79) !important;
 }
 
-.personal-info-labels {
+.personal-info {
     flex: 1;
     text-align: left;
-    margin-left: 10%;
     color: rgb(79, 79, 79) !important;
 }
 
-.personal-info-labels .form-group label {
+.personal-info label {
     color: rgb(79, 79, 79) !important;
-    padding-top: 0.5em;
-    height: 1em;
 }
 
-.personal-info-labels .form-group p span {
-    font-weight: 700;
-    font-size: 0.9em;
+.personal-info input {
+    width: 20% !important;
+    height: 2.2em;
 }
 
-.personal-info-values .form-group input {
-    margin-top: 0.2em;
+.input-box {
+    display: grid;
+    grid-template-columns: repeat(250px, 1fr);
+    grid-gap: 1em !important;
 }
 
-.account-input {
-    height: 2em !important;
-    width: 100%;
+.security-section .form-group label{
+    color: rgb(79, 79, 79) !important;  
+}
+.security-section .form-group input{
+    height: 2.2em;
+}
+.delete-account-box{
+    padding: 2em 1em;
+    margin-top: 3em;
+    border: 1px solid rgb(255, 0, 0,0.7);
+    border-radius: 4px;
+    width: fit-content;
 }
 
-.account-textarea {
-    height: 6em !important;
-    width: 100%;
+
+@media (max-width: 768px) {
+    .myaccount-wrapper {
+        height: fit-content !important;
+        padding: 1em 1em 10em 1em;
+        background-color: rgb(244, 244, 244) !important;
+        color: rgb(79, 79, 79) !important;
+    }
 }
 
-.personal-info-values {
-    flex: 1;
-    margin: 0 10px;
-}
-
-.personal-info-actions {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-}
-
+/* modal */
 .modal-content {
     background-color: rgba(0, 0, 0, 0.9);
 }
@@ -622,16 +628,4 @@
 
 .selected-avatar {
     filter: brightness(100%);
-}
-
-
-
-
-
-@media (max-width: 768px) {
-    .personal-info-labels {
-        margin-left: 0;
-    }
-
-
 }

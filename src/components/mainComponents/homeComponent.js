@@ -179,10 +179,15 @@ function Home() {
                         {/* indicating on playing sound */}
                         <div className='d-flex'>
                             <h1>{audios[randomInt].title}</h1>
+                            {/* <div>
+                                {playingAudio === audios[randomInt].audioID && (
+                                    <iframe className='soundwave-gif' style={{ marginTop: "1em" }} src="https://giphy.com/embed/CpDS8OlJaV3MLsjROZ" width="40" height="30" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                                )}
+                            </div> */}
                         </div>
 
                         <div className={`hero-part-details ${!showHeroDetails ? 'hidden' : ''} ${!minimizeBox ? 'hiddenbox' : ''}`} id='hero-part-details'>
-                            <p>{audios[randomInt].categoryName}</p>
+                            <p><em>{audios[randomInt].categoryName}</em></p>
                             <p>{audios[randomInt].description}</p>
                         </div>
 
@@ -215,14 +220,10 @@ function Home() {
                             >
                                 More info &nbsp; <i class="fa-solid fa-chevron-down"></i>
                             </button>
+
                         </div>
 
                     </div>
-                    {playingAudio === audios[randomInt].audioID && (
-                        <div className='soundwave-gif'>
-                            <iframe style={{ marginTop: "1em" }} src="https://giphy.com/embed/CpDS8OlJaV3MLsjROZ" width="50" height="70" frameBorder="0" class="giphy-embed" allowFullScreen></iframe> 
-                        </div>
-                    )}
                 </div>
             )}
 

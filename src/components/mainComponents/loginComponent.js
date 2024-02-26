@@ -163,7 +163,6 @@ function Login() {
 
 
 
-
   const loginUser = async (e) => {
     e.preventDefault();
     try {
@@ -189,7 +188,7 @@ function Login() {
       }
 
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data); // Add this line to log the error response data
       setError(error.response.data);
     }
 
@@ -199,7 +198,6 @@ function Login() {
   const chooseAvatar = async () => {
 
     try {
-
       const response = await axios.get(`${URL}/${AVATAR_ENDPOINT}`);
       console.log(response.data);
     } catch (error) {

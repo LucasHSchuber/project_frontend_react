@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Howl } from 'howler';
 import { Modal } from 'react-bootstrap';
@@ -28,13 +28,19 @@ function Myaccount() {
     const [avatars, setAvatars] = useState([]);
     const [chosenAvatar, setChosenAvatar] = useState("");
     const [openModal, setOpenModal] = useState(false);
-    const [userData, setUserData] = useState({
-        email: '',
-        name: '',
-        username: '',
-        userinfo: ''
-    });
+    // const [userData, setUserData] = useState({
+    //     email: '',
+    //     name: '',
+    //     username: '',
+    //     password: ''
+    // });
+    const [newEmail, setNewEmail] = useState("");
+    const [newName, setNewName] = useState("");
+    const [newUsername, setNewUsername] = useState("");
+    const [newPassword, setNewPassword] = useState("");
 
+
+    const Navigate = useNavigate();
 
     const fetchAvatas = async () => {
         try {
@@ -67,17 +73,60 @@ function Myaccount() {
     }
 
 
+    //update user info
+    const updateUser = async () => {
+        let id = sessionStorage.getItem("userid");
+        const data = {
+            UserId: id,
+            Email: newEmail,
+            Username: newUsername,
+            Name: newName
+        };
+        console.log(data);
+        try {
+            const response = await axios.put(`${URL}/${USER_ENDPOINT}/${id}`, data);
+            console.log(response.data);
+            setNewEmail("");
+            setNewName("");
+            setNewUsername("");
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setUserData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const updatePersonalInfo = () => {
-        // Implement the logic to save changes to personal information
+    //update user password
+    const updatePassword = async () => {
+        let id = sessionStorage.getItem("userid");
+        const data = {
+            UserId: id,
+            PasswordHash: newPassword
+        };
+        console.log(data);
+        try {
+            const response = await axios.put(`${URL}/${USER_ENDPOINT}/${id}`, data);
+            console.log(response.data);
+            setNewPassword("");
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    //delete user account
+    const deleteAccount = async () => {
+        let id = sessionStorage.getItem("userid");
+        try {
+            const response = await axios.delete(`${URL}/${USER_ENDPOINT}/${id}`);
+            console.log(response.data);
+
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('userid');
+
+            Navigate("/index");
+
+        } catch (error) {
+            console.log(error);
+        }
     };
 
 
@@ -120,30 +169,30 @@ function Myaccount() {
 
 
 
-    const handleImgUpload = async (event) => {
+    // const handleImgUpload = async (event) => {
 
-        const file = event.target.files[0];
-        const formData = new FormData();
-        formData.append('img', file);
+    //     const file = event.target.files[0];
+    //     const formData = new FormData();
+    //     formData.append('img', file);
 
 
-        let id = sessionStorage.getItem("userid");
-        console.log(id);
-        console.log('FormData:', formData);
+    //     let id = sessionStorage.getItem("userid");
+    //     console.log(id);
+    //     console.log('FormData:', formData);
 
-        try {
-            const response = await axios.post(`${URL}/${USER_ENDPOINT}/uploadimg/${id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
+    //     try {
+    //         const response = await axios.post(`${URL}/${USER_ENDPOINT}/uploadimg/${id}`, formData, {
+    //             headers: {
+    //                 'Content-Type': 'multipart/form-data'
+    //             }
+    //         })
 
-            console.log(response.data);
+    //         console.log(response.data);
 
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
 
 
@@ -161,60 +210,66 @@ function Myaccount() {
                 <hr className='hr'></hr>
 
                 {/* Personal Information Section */}
-                <div className="personal-info-section d-flex flex-column flex-md-row">
+                <div className="personal-info-section">
                     <div className="mb-3">
                         <h5>Personal Information</h5>
-                        {userInfo.avatar && (
-                            <div key={userInfo.userId} className='my-4'>
-                                <img className="settings-avatar-image" src={`${URL}/imgupload/${userInfo.avatar.avatarImageName}`} alt="Avatar" />
-                                <button onClick={toggleModal}>change</button>
-                            </div>
-                        )}
-                        <div>
-                            <label htmlFor="avatarUpload" className="btn btn-primary">Upload picture</label>
-                            <input type="file" id="avatarUpload" name="avatarUpload" style={{ display: 'none' }} onChange={handleImgUpload} />
-                        </div>
                     </div>
-                    <div className="personal-info-labels mb-3 mb-md-0">
+                    <div className="personal-info">
                         <div className="form-group">
                             {userInfo && userInfo.avatar && (
                                 <div key={userInfo.userId}>
-                                    <p> <span>{userInfo.email}</span></p>
-                                    <p>Name: <span>{userInfo.name}</span></p>
-                                    <p>Username: <span>{userInfo.username}</span></p>
+                                    <div className='d-flex input-box'>
+                                        <label> {userInfo.email}</label>
+                                        <input className='account-input mb-3 mb-md-0' type="email" id="email" name="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
+                                    </div>
+                                    <div className='d-flex input-box'>
+                                        <label>Name: {userInfo.name}</label>
+                                        <input className='account-input mb-3 mb-md-0' type="text" id="name" name="name" value={newName} onChange={(e) => setNewName(e.target.value)} />
+                                    </div>
+                                    <div className='d-flex input-box'>
+                                        <label>Username: {userInfo.username}</label>
+                                        <input className='account-input mb-3 mb-md-0' type="text" id="username" name="username" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
+                                    </div>
+                                    <button onClick={updateUser}>Change</button>
                                 </div>
+
                             )}
                         </div>
                     </div>
-                    <div className="personal-info-values">
-                        <div className="form-group">
-                            <input className='account-input mb-3 mb-md-0' type="email" id="email" name="email" value={userData.email} onChange={handleInputChange} />
-                            <input className='account-input mb-3 mb-md-0' type="text" id="name" name="name" value={userData.name} onChange={handleInputChange} />
-                            <input className='account-input mb-3 mb-md-0' type="text" id="username" name="username" value={userData.username} onChange={handleInputChange} />
-                        </div>
+                    <div>
+                        {userInfo.avatar && (
+                            <div key={userInfo.userId} className='my-4'>
+                                <img className="settings-avatar-image" src={`${URL}/imgupload/${userInfo.avatar.avatarImageName}`} alt="Avatar" />
+                                <button className="link-button mx-3" onClick={toggleModal}>Change&nbsp;<i class="fa-solid fa-right-left"></i></button>
+                            </div>
+                        )}
                     </div>
                 </div>
 
                 <hr className='hr'></hr>
 
-                <div className="security-section d-flex flex-column flex-md-row">
-                    <div className="mb-3">
-                        <h5>Security</h5>
+                <div className="security-section">
+                    <div>
+                        <div className="mb-3">
+                            <h5>Security</h5>
+                        </div>
+                        <div className="security-labels">
+                            <div className="form-group">
+                                {userInfo && (
+                                    <div key={userInfo.userId}>
+                                        <label>Password: ********</label>
+                                        <input className='account-input mb-3 mb-md-0' placeholder="Change password" type="email" id="email" name="email" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+                                        <button onClick={updatePassword}>Update password</button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
-                    <div className="security-labels mb-3 mb-md-0">
-                        <div className="form-group">
-                            {userInfo && (
-                                <div key={userInfo.userId}>
-                                    <p>Password: ********</p>
 
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                    <div className="security-values">
-                        <div className="form-group">
-                            <input className='account-input mb-3 mb-md-0' placeholder="Change password" type="email" id="email" name="email" value={userData.password} onChange={handleInputChange} />
-                        </div>
+                    <div className='delete-account-box'>
+                        <h6><b>Delete account</b></h6>
+                        <p><em>Be aware of that once you have deleted your account your account will be lost forever</em></p>
+                        <button className='delete-button' onClick={deleteAccount}>Delete account</button>
                     </div>
                 </div>
 
@@ -222,8 +277,7 @@ function Myaccount() {
 
 
 
-
-
+            {/* change avatar modal */}
             <Modal show={openModal} onHide={toggleModal} className='avatar-modal'>
                 <Modal.Header className='avatar-modal-header'>
                     <Modal.Title >Change Avatar</Modal.Title>
