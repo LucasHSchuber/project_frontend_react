@@ -224,15 +224,15 @@ function Myaccount() {
 
 
 
-            <Modal show={openModal} onHide={toggleModal}>
-                <Modal.Header>
-                    <Modal.Title>Change Avatar</Modal.Title>
+            <Modal show={openModal} onHide={toggleModal} className='avatar-modal'>
+                <Modal.Header className='avatar-modal-header'>
+                    <Modal.Title >Change Avatar</Modal.Title>
                     <button type="button" className="close" aria-label="Close" onClick={toggleModal}>
                         <i style={{ color: "white" }} class="fa-solid fa-xmark"></i>
                     </button>
                 </Modal.Header>
-                <Modal.Body>
-                    <div className='row py-4'>
+                <Modal.Body className='row py-4 avatar-modal-body'>
+                    <div className='row py-4 avatar-modal-content' >
                         {avatars.slice(1).map((avatar) => (
                             <div
                                 key={avatar.avatarId}
@@ -251,8 +251,6 @@ function Myaccount() {
                                 />
                             </div>
                         ))}
-
-
                         <div style={{ margin: "0 auto" }}>
                             <button className="gradient-button my-3" type='submit' onClick={() => selectedAvatar(chosenAvatar)}>Choose avatar</button>
                         </div>

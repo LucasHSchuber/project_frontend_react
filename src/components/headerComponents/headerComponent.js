@@ -5,12 +5,12 @@ import axios from 'axios';
 
 //import css
 import '../../assets/css/header.css';
-import logo from '../../assets/images/pray.png';
 
 // Importing api url and enpoints
 import { URL, USER_ENDPOINT, AVATAR_ENDPOINT } from '../../api';
 
 //import images
+import logo from '../../assets/images/pray.png';
 import settingsImg from '../../assets/images/gear.png';
 import favoritesImg from '../../assets/images/heart.png';
 import mylistImg from '../../assets/images/list.png';

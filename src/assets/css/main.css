@@ -2,6 +2,10 @@
 /* This is the main css file */
 
 
+
+
+
+
 /* logout */
 
 .logout-wrapper {
@@ -203,7 +207,7 @@
 
 .home-wrapper {
     height: fit-content !important;
-    padding: 5em 0 18em 0;
+    padding: 0 0 18em 0;
     background-color: #141414 !important;
     color: white;
 }
@@ -211,6 +215,166 @@
 .audio-image {
     width: 10em;
 }
+
+.hero-section {
+    width: 100%;
+    height: 35em;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    padding-left: 20% !important;
+}
+
+.hero-details {
+    position: absolute;
+    top: 60%;
+    left: 2;
+    transform: translate(-50%, -50%);
+    color: white;
+    max-width: 90%;
+    text-align: left;
+}
+
+.hero-part-details {
+    opacity: 1;
+    height: 5em;
+    transition: opacity 5s ease, height 2s ease;
+}
+
+.hero-part-details.hidden {
+    opacity: 0;
+}
+
+.hero-part-details.hiddenbox {
+    height: 1em !important;
+}
+
+.hero-details h1 {
+    font-size: 4em;
+}
+
+.soundwave-gif {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 1em;
+    align-items: center;
+    background-color: inherit;
+    border-radius: 50%;
+    border: 1px solid rgba(92, 92, 92, 0.8);
+    background-color: rgb(219, 219, 219);
+    color: white;
+    width: 72px;
+    height: 70px;
+    transition: 0.2s;
+}
+
+/* modal */
+.info-modal {
+    margin-top: 1em !important;
+    margin-right: 20em;
+}
+
+.info-modal-body {
+    position: relative;
+    padding: 0;
+    height: fit-content;
+    width: 50em;
+    color: rgb(244, 244, 244) !important;
+    background-color: #181818 !important;
+}
+
+.info-modal-body img {
+    width: 100%;
+    height: 22em !important;
+    object-fit: cover;
+    object-position: top;
+}
+
+.info-modal-content {
+    padding: 2em 3em;
+}
+
+.info-modal-content h5 {
+    font-size: 2.6em;
+    font-weight: 700;
+}
+
+.info-modal-content .category {
+    font-style: italic;
+    font-weight: 500;
+}
+
+
+.info-modal-close {
+    position: absolute;
+    top: 5%;
+    right: 3%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: 10px;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    color: white;
+    z-index: 2;
+}
+
+
+@media (min-width: 1500px) {
+    .hero-details {
+        left: 20%;
+        margin-left: 5em !important;
+        padding-right: 5em !important;
+        width: 30em;
+    }
+
+    .hero-details h1 {
+        font-size: 3.2em !important;
+    }
+
+}
+
+@media (max-width: 1500px) {
+    .hero-details {
+        left: 20%;
+        margin-left: 5em !important;
+        padding-right: 5em !important;
+        width: 30em;
+    }
+
+    .hero-details h1 {
+        font-size: 3em !important;
+    }
+
+}
+
+@media (max-width: 991px) {
+    .hero-details {
+        left: 30%;
+    }
+
+    .hero-details h1 {
+        font-size: 2.6em !important;
+    }
+}
+
+
+@media (max-width: 670px) {
+    .hero-details {
+        left: 35%;
+    }
+
+    .hero-details h1 {
+        font-size: 2em !important;
+    }
+
+
+}
+
+@media (max-width: 473px) {
+    .hero-details {
+        left: 43%;
+    }
+}
+
 
 
 /* chooseavatar */
@@ -263,6 +427,13 @@
 
 /* my list mylist */
 
+.mylist-wrapper {
+    height: fit-content !important;
+    padding: 1em 0 18em 0;
+    background-color: #141414 !important;
+    color: white;
+}
+
 .audio-cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -270,7 +441,6 @@
 }
 
 .audio-card {
-    /* border: 1px solid #3a3a3a; */
     border-radius: 3px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -278,12 +448,10 @@
     flex-direction: column;
     position: relative;
     height: 160px;
-    /* Ensure relative positioning for absolute children */
 }
 
 .audio-image {
     height: 160px;
-    /* Adjust the height as needed */
     background-size: cover;
     background-position: center;
     position: relative;
@@ -411,30 +579,33 @@
     align-items: flex-end;
 }
 
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
 .settings-avatar-image {
     width: 4em !important;
     transition: 0.2s;
 }
 
-.modal-header {
-    background-color: rgba(0, 0, 0, 0);
+.avatar-modal-header {
+    background-color: rgba(0, 0, 0, 0.9);
     border-bottom: none;
     border-radius: 20px 20px 0 0;
 }
 
-.modal-content {
+.avatar-modal-content {
     border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.9);
-}
-
-.modal-title {
-    color: #fff;
-}
-
-.modal-body {
     padding: 1em 4em;
 }
 
+.modal-title {
+    color: #fff !important;
+}
+
+.avatar-modal-body {
+    padding: 1em 2em;
+}
 
 .avatar-image-box {
     cursor: pointer;
@@ -452,6 +623,9 @@
 .selected-avatar {
     filter: brightness(100%);
 }
+
+
+
 
 
 @media (max-width: 768px) {

@@ -68,6 +68,7 @@
     background-color: inherit;
     border-radius: 50%;
     border: 1px solid rgba(92, 92, 92, 0.8);
+    background-color: #141414;
     color: white;
     font-size: 1.2em;
     font-style: bold;
@@ -75,6 +76,7 @@
     height: 50px;
     transition: 0.2s;
 }
+
 .addtolist-button i {
     margin-right: 0.2em !important;
 }
@@ -82,4 +84,46 @@
 .addtolist-button:hover {
     border: 1px solid rgba(173, 173, 173, 0.8);
     background-color: rgb(32, 32, 32);
+}
+
+.moreinfo-button {
+    display: flex;
+    justify-content: center;
+    margin: 0.2em;
+    align-items: center;
+    background-color: inherit;
+    border-radius: 5px;
+    background-color: #141414;
+    border: 1px solid rgba(92, 92, 92, 0.8);
+    color: white;
+    font-size: 1.2em;
+    font-style: bold;
+    width: 150px;
+    height: 50px;
+    transition: 0.2s;
+}
+
+.moreinfo-button:hover {
+    border: 1px solid rgba(173, 173, 173, 0.8);
+    background-color: rgb(32, 32, 32);
+}
+
+.close-button {
+    margin: 0.2em;
+    background-color: rgb(53, 53, 53);
+    border-radius: 50%;
+    background-color: #141414;
+    border: 1px solid rgba(92, 92, 92, 0.8);
+    color: white;
+    font-size: 1.2em;
+    font-style: bold;
+    width: 50px;
+    height: 50px;
+    transition: 0.2s;
+}
+
+.close-button:hover {
+    border: 1px solid rgba(173, 173, 173, 0.8);
+    background-color: rgb(32, 32, 32);
+
 }

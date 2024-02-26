@@ -120,9 +120,14 @@ function Mylist() {
 
 
     return (
-        <div className='home-wrapper' id="home-wrapper" >
-            <div className='home-content'>
-                <div className="audio-cards-container">
+        <div className='mylist-wrapper' id="mylist-wrapper" >
+            <div className='mylist-content'>
+
+                <div className='container mb-5'>
+                    <h4>My list <i className="fa-solid fa-plus"></i></h4>
+                </div>
+
+                <div className="audio-cards-container container">
                     {userAudios.map((audio) => (
                         <div key={audio.audioID} className="audio-card">
                             <div className="audio-image" style={{ backgroundImage: `url(${URL}/imgupload/${audio.imageName})` }}>
@@ -135,13 +140,21 @@ function Mylist() {
                             <div className="audio-details">
                                 <h3>{audio.title}</h3>
                                 <p>{audio.description}</p>
-                                <button
-                                    // value={audio.audioID}
-                                    className='addtolist-button'
-                                    onClick={() => { userAudioIDs.includes(audio.audioID) ? removeFromList(audio.audioID) : addToList(audio.audioID) }}
-                                >
-                                    {userAudioIDs.includes(audio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
-                                </button>
+                                <div className='d-flex'>
+                                    <button
+                                        // value={audio.audioID}
+                                        className='addtolist-button'
+                                        onClick={() => { userAudioIDs.includes(audio.audioID) ? removeFromList(audio.audioID) : addToList(audio.audioID) }}
+                                    >
+                                        {userAudioIDs.includes(audio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
+                                    </button>
+                                    <button
+                                        className='addtolist-button'
+                                    >
+                                        <i class="fa-regular fa-heart"></i>
+                                    </button>
+                                </div>
+
                             </div>
                         </div>
                     ))}
