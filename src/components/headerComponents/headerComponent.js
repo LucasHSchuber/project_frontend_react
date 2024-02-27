@@ -152,7 +152,7 @@ function Header() {
                     <>
                       <NavDropdown.Item as={Link} to="/myaccount"><img src={userImg} alt="user img" className='dropdown-item-icon'></img>Your account</NavDropdown.Item>
                       <NavDropdown.Item as={Link} to="/mylist"><img src={mylistImg} alt="mylist img" className='dropdown-item-icon'></img>My list</NavDropdown.Item>
-                      <NavDropdown.Item as={Link} to="/home"><img src={favoritesImg} alt="favorites img" className='dropdown-item-icon'></img>Favorites</NavDropdown.Item>
+                      <NavDropdown.Item as={Link} to="/myfavorites"><img src={favoritesImg} alt="favorites img" className='dropdown-item-icon'></img>Favorites</NavDropdown.Item>
                       {/* <NavDropdown.Item as={Link} to="/home"><img src={settingsImg} alt="settings img" className='dropdown-item-icon'></img>Settings</NavDropdown.Item> */}
                       <hr className='hr'></hr>
                     </>

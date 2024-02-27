@@ -14,6 +14,7 @@ import ChooseAvatar from "./components/mainComponents/chooseavatarComponent";
 import Mylist from "./components/mainComponents/mylistComponent"
 import Myaccount from "./components/mainComponents/myaccountComponent"
 import Nature from "./components/mainComponents/natureComponent"
+import Myfavorite from "./components/mainComponents/myfavoritesComponent"
 
 
 //import js
@@ -76,6 +77,11 @@ function App() {
               <div className=''>
                 <Routes>
                   <Route path="/nature" element={<Nature />} />
+                </Routes>
+              </div>
+              <div className=''>
+                <Routes>
+                  <Route path="/myfavorites" element={<Myfavorite />} />
                 </Routes>
               </div>
 

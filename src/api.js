@@ -9,5 +9,6 @@ export const USER_ENDPOINT = 'api/userapi';
 export const AVATAR_ENDPOINT = 'api/avatarapi';
 export const USERLIST_ENDPOINT = 'api/userlistapi';
 export const USERAUDIO_ENDPOINT = 'api/useraudioapi';
+export const LIKE_ENDPOINT = 'api/likeapi';
 
 // Add other endpoints as needed

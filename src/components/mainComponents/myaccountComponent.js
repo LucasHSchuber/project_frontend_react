@@ -406,7 +406,7 @@ function Myaccount() {
                     <button type="button" className="close" aria-label="Close" onClick={toggleDeleteAccountModal}>
                         <i style={{ color: "white" }} class="fa-solid fa-xmark"></i>
                     </button>
-                    <div className='py-2'>
+                    <div className='py-md-2'>
                         <h6>To delete your account enter your password and press "delete account" button</h6>
                         <p><em>This action can not be undone</em></p>
                         <input className={`account-input mb-3 mb-md-0 ${error.deleteAccount ? "error border-error" : ""}`} placeholder={error.deleteAccount ? error.deleteAccount : "Your password"} type="password" id="confirmpassword" name="confirmpassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} onFocus={() => setError({ ...error, deleteAccount: "" })} />
@@ -417,7 +417,7 @@ function Myaccount() {
                         )}
                     </div>
                     <div>
-                        <button className="delete-button my-2" type='submit' style={{ width: "100% " }} onClick={deleteAccount}>Delete account</button>
+                        <button className="delete-button my-md-2" type='submit' style={{ width: "100% " }} onClick={deleteAccount}>Delete account</button>
                     </div>
                     {/* <div>
                         <button className="normal-button my-2" type='submit' onClick={toggleDeleteAccountModal} >Close <i class="fa-solid fa-xmark"></i></button>

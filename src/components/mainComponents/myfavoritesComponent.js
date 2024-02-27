@@ -18,22 +18,41 @@ import '../../assets/css/global.css';
 
 
 //start apge
-function Mylist() {
-
+function Myfavorite() {
     //define states
-    const [audios, setAudios] = useState([]);
+    // const [audios, setAudios] = useState([]);
     const [userAudios, setUserAudios] = useState([]);
     const [listedAudios, setListedAudios] = useState([]);
-
     const [userAudioIDs, setUserAudioIDs] = useState([]);
+
     const [userFavoriteIDs, setUserFavoriteIDs] = useState([]);
 
-    const [showValidationMessage, setShowValidationMessage] = useState(false);
-    const [validationMessage, setValidationMessage] = useState('');
 
 
 
-// FAVORITE METHODS
+
+
+    //fetch all favorite audios 
+    const fetchUserAudios = async () => {
+        let id = sessionStorage.getItem("userid");
+        try {
+            const response = await axios.get(`${URL}/${LIKE_ENDPOINT}/${id}/myfavorites`);
+            console.log(response.data);
+            setUserAudios(response.data);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        // fetchAudios();
+        fetchUserAudios();
+    }, [])
+
+
+
+
+    // FAVORITE METHODS
 
     //fetches all already added audios thats on the user list
     const getAddedFavoriteAudios = async () => {
@@ -73,12 +92,6 @@ function Mylist() {
             console.log(response.data);
             getAddedFavoriteAudios();
 
-            setShowValidationMessage(true);
-            setValidationMessage('Added to favorites <i class="fa-solid fa-check-double"></i>')
-            setTimeout(() => {
-                setShowValidationMessage(false);
-            }, 2000);
-
         } catch (error) {
             console.log(error);
         }
@@ -95,20 +108,20 @@ function Mylist() {
             const response = await axios.delete(`${URL}/${LIKE_ENDPOINT}/${userId}/${audioId}`);
             console.log(response.data);
             getAddedFavoriteAudios();
-
-            setShowValidationMessage(true);
-            setValidationMessage('Removed from favorites <i class="fa-solid fa-check-double"></i>')
-            setTimeout(() => {
-                setShowValidationMessage(false);
-            }, 2000);
-
+            fetchUserAudios();
         } catch (error) {
             console.log(error);
         }
     }
 
 
-    // METHOD LIST
+
+
+
+
+
+
+    // LIST METHODS
 
     //fetches all already added audios thats on the user list
     const getAddedAudios = async () => {
@@ -131,6 +144,7 @@ function Mylist() {
     useEffect(() => {
         getAddedAudios();
     }, [])
+
     //adds an audio to the list
     const addToList = async (audioid) => {
 
@@ -151,6 +165,7 @@ function Mylist() {
             console.log(error);
         }
     }
+
     //remove an audio from the list
     const removeFromList = async (audioId) => {
 
@@ -170,35 +185,12 @@ function Mylist() {
 
 
 
-
-
-    //fetch user audios
-    const fetchUserAudios = async () => {
-        let id = sessionStorage.getItem("userid");
-        try {
-            const response = await axios.get(`${URL}/${AUDIO_ENDPOINT}/${id}/mylist`);
-            console.log(response.data);
-            setUserAudios(response.data);
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    useEffect(() => {
-        // fetchAudios();
-        fetchUserAudios();
-    }, [])
-
-
-
-
-
     return (
         <div className='mylist-wrapper' id="mylist-wrapper" >
             <div className='mylist-content'>
 
                 <div className='container mb-5'>
-                    <h4>My list <i class="fa-solid fa-list"></i></h4>
+                    <h4>My favorites  <i class="fa-regular fa-heart"></i></h4>
                 </div>
 
                 <div className="audio-cards-container container">
@@ -235,14 +227,9 @@ function Mylist() {
                     ))}
                 </div>
             </div>
-
-            {showValidationMessage && (
-                <div className="validation-message" dangerouslySetInnerHTML={{ __html: validationMessage }} />
-            )}
-
         </div>
     );
 
 }
 
-export default Mylist;
+export default Myfavorite;

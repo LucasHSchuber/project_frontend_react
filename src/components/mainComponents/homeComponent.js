@@ -13,7 +13,7 @@ import logo from '../../assets/images/pray.png';
 // import gif1 from '../../assets/gifs/soundwave.gif';
 
 // Importing api url and enpoints
-import { URL, USERAUDIO_ENDPOINT, AUDIO_ENDPOINT } from '../../api';
+import { URL, USERAUDIO_ENDPOINT, AUDIO_ENDPOINT, LIKE_ENDPOINT } from '../../api';
 
 //import css
 import '../../assets/css/main.css';
@@ -28,11 +28,16 @@ function Home() {
     //define states
     const [audios, setAudios] = useState([]);
     const [userAudioIDs, setUserAudioIDs] = useState([]);
+    const [userFavoriteIDs, setUserFavoriteIDs] = useState([]);
+
     const [showHeroDetails, setShowHeroDetails] = useState(true);
     const [minimizeBox, setMinimizeBox] = useState(true);
     const [playingAudio, setPlayingAudio] = useState("");
     const [audiosByCategory, setAudiosByCategory] = useState([]);
     const [randomInt, setRandomInt] = useState(0);
+
+    const [showValidationMessage, setShowValidationMessage] = useState(false);
+    const [validationMessage, setValidationMessage] = useState('');
 
     //modal states
     const [openModal, setOpenModal] = useState(false);
@@ -54,42 +59,9 @@ function Home() {
         }
     }
 
-    //adds an audio to the list
-    const addToList = async (audioid) => {
 
-        let id = sessionStorage.getItem("userid");
-        console.log(id);
-        console.log(audioid);
+    // METHOD LIST
 
-        const data = {
-            UserId: id,
-            AudioId: audioid
-        };
-        try {
-            const response = await axios.post(`${URL}/${USERAUDIO_ENDPOINT}`, data);
-            console.log(response.data);
-            getAddedAudios();
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    //remove an audio from the list
-    const removeFromList = async (audioId) => {
-
-        let userId = sessionStorage.getItem("userid");
-        console.log(userId);
-        console.log(audioId);
-
-        try {
-            const response = await axios.delete(`${URL}/${USERAUDIO_ENDPOINT}/${userId}/${audioId}`);
-            console.log(response.data);
-            getAddedAudios(); // Refresh the list of added audios
-        } catch (error) {
-            console.log(error);
-        }
-    }
     //fetches all already added audios thats on the user list
     const getAddedAudios = async () => {
 
@@ -107,6 +79,136 @@ function Home() {
             console.log(error);
         }
     }
+    //adds an audio to the list
+    const addToList = async (audioid) => {
+
+        let id = sessionStorage.getItem("userid");
+        console.log(id);
+        console.log(audioid);
+
+        const data = {
+            UserId: id,
+            AudioId: audioid
+        };
+        try {
+            const response = await axios.post(`${URL}/${USERAUDIO_ENDPOINT}`, data);
+            console.log(response.data);
+            getAddedAudios();
+
+            setShowValidationMessage(true);
+            setValidationMessage('Added to your list <i class="fa-solid fa-check-double"></i>')
+            setTimeout(() => {
+                setShowValidationMessage(false);
+            }, 2000);
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    //remove an audio from the list
+    const removeFromList = async (audioId) => {
+
+        let userId = sessionStorage.getItem("userid");
+        console.log(userId);
+        console.log(audioId);
+
+        try {
+            const response = await axios.delete(`${URL}/${USERAUDIO_ENDPOINT}/${userId}/${audioId}`);
+            console.log(response.data);
+            getAddedAudios(); // Refresh the list of added audios
+
+            setShowValidationMessage(true);
+            setValidationMessage('Removed from your list <i class="fa-solid fa-check-double"></i>')
+            setTimeout(() => {
+                setShowValidationMessage(false);
+            }, 2000);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+
+
+
+    // FAVORITE METHODS
+
+    //fetches all already added audios thats on the user list
+    const getAddedFavoriteAudios = async () => {
+
+        let id = sessionStorage.getItem("userid");
+        console.log(id);
+
+        try {
+            const response = await axios.get(`${URL}/${LIKE_ENDPOINT}/${id}`);
+            // console.log(response.data);
+            const likeAudioIDs = response.data.map(like => like.audioID);
+            setUserFavoriteIDs(likeAudioIDs);
+            console.log(likeAudioIDs);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        getAddedFavoriteAudios();
+    }, [])
+
+
+    //adds an audio to the list
+    const addToFavoriteList = async (audioid) => {
+
+        let id = sessionStorage.getItem("userid");
+        console.log(id);
+        console.log(audioid);
+
+        const data = {
+            UserId: id,
+            AudioId: audioid
+        };
+        try {
+            const response = await axios.post(`${URL}/${LIKE_ENDPOINT}`, data);
+            console.log(response.data);
+            getAddedFavoriteAudios();
+
+            setShowValidationMessage(true);
+            setValidationMessage('Added to favorites <i class="fa-solid fa-check-double"></i>')
+            setTimeout(() => {
+                setShowValidationMessage(false);
+            }, 2000);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    //remove an audio from the list
+    const removeFromFavoriteList = async (audioId) => {
+
+        let userId = sessionStorage.getItem("userid");
+        console.log(userId);
+        console.log(audioId);
+
+        try {
+            const response = await axios.delete(`${URL}/${LIKE_ENDPOINT}/${userId}/${audioId}`);
+            console.log(response.data);
+            getAddedFavoriteAudios();
+
+            setShowValidationMessage(true);
+            setValidationMessage('Removed from favorites <i class="fa-solid fa-check-double"></i>')
+            setTimeout(() => {
+                setShowValidationMessage(false);
+            }, 2000);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+
     //fetches all audios in a specific category
     const fetchAudiosByCategory = async (category) => {
 
@@ -127,7 +229,7 @@ function Home() {
         fetchAudiosByCategory();
     }, [])
 
-
+    //Minimize box on hero after time
     useEffect(() => {
         const timout = setTimeout(() => {
             setShowHeroDetails(false);
@@ -138,6 +240,7 @@ function Home() {
     }, []);
 
 
+    // autoplay audio 
     const handleAudioPlay = (audioid) => {
         if (playingAudio !== null && playingAudio !== audioid) {
             console.log("Audio file has changed");
@@ -208,8 +311,9 @@ function Home() {
                             </button>
                             <button
                                 className='addtolist-button'
+                                onClick={() => { userFavoriteIDs.includes(audios[randomInt].audioID) ? removeFromFavoriteList(audios[randomInt].audioID) : addToFavoriteList(audios[randomInt].audioID) }}
                             >
-                                <i class="fa-regular fa-heart"></i>
+                                {userFavoriteIDs.includes(audios[randomInt].audioID) ? <i class="fa-solid fa-heart-circle-minus"></i> : <i class="fa-regular fa-heart"></i>}
                             </button>
                             <button
                                 className='moreinfo-button'
@@ -258,8 +362,9 @@ function Home() {
                                     </button>
                                     <button
                                         className='addtolist-button'
+                                        onClick={() => { userFavoriteIDs.includes(audio.audioID) ? removeFromFavoriteList(audio.audioID) : addToFavoriteList(audio.audioID) }}
                                     >
-                                        <i class="fa-regular fa-heart"></i>
+                                        {userFavoriteIDs.includes(audio.audioID) ? <i class="fa-solid fa-heart-circle-minus"></i> : <i class="fa-regular fa-heart"></i>}
                                     </button>
                                     <button
                                         className='addtolist-button'
@@ -309,8 +414,9 @@ function Home() {
                                     </button>
                                     <button
                                         className='addtolist-button'
+                                        onClick={() => { userFavoriteIDs.includes(audio.audioID) ? removeFromFavoriteList(audio.audioID) : addToFavoriteList(audio.audioID) }}
                                     >
-                                        <i class="fa-regular fa-heart"></i>
+                                        {userFavoriteIDs.includes(audio.audioID) ? <i class="fa-solid fa-heart-circle-minus"></i> : <i class="fa-regular fa-heart"></i>}
                                     </button>
                                     <button
                                         className='addtolist-button'
@@ -361,8 +467,9 @@ function Home() {
                                     </button>
                                     <button
                                         className='addtolist-button'
+                                        onClick={() => { userFavoriteIDs.includes(audio.audioID) ? removeFromFavoriteList(audio.audioID) : addToFavoriteList(audio.audioID) }}
                                     >
-                                        <i class="fa-regular fa-heart"></i>
+                                        {userFavoriteIDs.includes(audio.audioID) ? <i class="fa-solid fa-heart-circle-minus"></i> : <i class="fa-regular fa-heart"></i>}
                                     </button>
                                     <button
                                         className='addtolist-button'
@@ -427,8 +534,9 @@ function Home() {
                                     </button>
                                     <button
                                         className='addtolist-button'
+                                        onClick={() => { userFavoriteIDs.includes(modalAudio.audioID) ? removeFromFavoriteList(modalAudio.audioID) : addToFavoriteList(modalAudio.audioID) }}
                                     >
-                                        <i class="fa-regular fa-heart"></i>
+                                        {userFavoriteIDs.includes(modalAudio.audioID) ? <i class="fa-solid fa-heart-circle-minus"></i> : <i class="fa-regular fa-heart"></i>}
                                     </button>
                                 </div>
 
@@ -462,8 +570,9 @@ function Home() {
                                                     </button>
                                                     <button
                                                         className='addtolist-button'
+                                                        onClick={() => { userFavoriteIDs.includes(categoryAudio.audioID) ? removeFromFavoriteList(categoryAudio.audioID) : addToFavoriteList(categoryAudio.audioID) }}
                                                     >
-                                                        <i class="fa-regular fa-heart"></i>
+                                                        {userFavoriteIDs.includes(categoryAudio.audioID) ? <i class="fa-solid fa-heart-circle-minus"></i> : <i class="fa-regular fa-heart"></i>}
                                                     </button>
                                                 </div>
                                             </div>
@@ -475,6 +584,11 @@ function Home() {
 
                     </Modal.Body>
                 </Modal>
+            )}
+
+
+            {showValidationMessage && (
+                <div className="validation-message" dangerouslySetInnerHTML={{ __html: validationMessage }} />
             )}
 
         </div >
