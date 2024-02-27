@@ -5,6 +5,8 @@ import axios from 'axios';
 import { Howl } from 'howler';
 import { useLocation } from 'react-router-dom';
 
+import { useAuth } from '../../assets/js/AuthContext';
+
 
 //import sounds
 import mp3 from '../../assets/sounds/click2.mp3';
@@ -25,6 +27,8 @@ import '../../assets/css/global.css';
 
 
 
+
+
 //start apge
 function Login() {
 
@@ -35,6 +39,7 @@ function Login() {
   const [error, setError] = useState("");
 
   const Navigate = useNavigate();
+  const { updateAuthStatus } = useAuth();
 
 
 
@@ -173,18 +178,22 @@ function Login() {
       console.log(response.data);
       setEmail("")
       setPassword("");
-      //store token and userid in localstorage
-      let token = response.data.token;
-      sessionStorage.setItem("token", token);
-      let userid = response.data.userId;
-      sessionStorage.setItem("userid", userid);
+
+      // Store token and user ID in sessionStorage
+      sessionStorage.setItem("token", response.data.token);
+      sessionStorage.setItem("userid", response.data.userId);
+
+      // Update authentication status in AuthContext
+      updateAuthStatus(true);
 
       //redirect user to home or ChooseAvatar
       if (response.data.avatarId == null && response.data.imageName == null) {
         chooseAvatar();
         Navigate("/chooseavatar");
       } else {
-        Navigate('/home');
+        // Navigate('/home');
+        Navigate('/home', { state: { loggedIn: true } });
+
       }
 
     } catch (error) {
@@ -235,6 +244,7 @@ function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             name="email"
+            required
           ></input>
 
           <label htmlFor='password'>Password</label>
@@ -244,6 +254,7 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             name="password"
+            required
           ></input>
 
           <button className="gradient-button my-3" type='submit'>Login</button>

@@ -6,6 +6,8 @@ import { PulseLoader } from 'react-spinners';
 import { MoonLoader } from 'react-spinners';
 import { RingLoader } from 'react-spinners';
 
+import { useAuth } from '../../assets/js/AuthContext';
+
 //define images
 import img1 from '../../assets/images/space2.jpg';
 
@@ -13,6 +15,7 @@ import img1 from '../../assets/images/space2.jpg';
 
 function Logout() {
     // Define states
+    const { updateAuthStatus } = useAuth();
     const [loading, setLoading] = useState(true);
     const Navigate = useNavigate();
 
@@ -21,11 +24,10 @@ function Logout() {
         const logoutUser = () => {
             // Remove from sessionStorage
             sessionStorage.removeItem('token');
-            let token = sessionStorage.getItem("token");
-            console.log(token);
             sessionStorage.removeItem('userid');
-            let userid = sessionStorage.getItem("userid");
-            console.log(userid);
+
+            // Update authentication status in AuthContext
+            updateAuthStatus(false);
 
             setTimeout(() => {
                 setLoading(false);
@@ -48,7 +50,7 @@ function Logout() {
                 <div>
                     {/* <BeatLoader color="#007bff" loading={loading} className="BeatLoader" />
                     <PulseLoader color="#007bff" loading={loading} size={15} margin={5} /> */}
-                    <MoonLoader className="MoonLoader" color="#fff" loading={loading} size={60} />
+                    <MoonLoader className="MoonLoader" color="#000" loading={loading} size={60} />
                     {/* <RingLoader color="#007bff" loading={loading} size={80} margin={10} /> */}
                 </div>
             </div>

@@ -44,14 +44,15 @@
 
 .normal-button {
     display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 10px 30px;
+    font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
-    border: none;
+    /* border: none; */
+    border: 1px solid rgba(58, 58, 58, 0.9);
     cursor: pointer;
     background-color: white;
-    color: rgb(15, 15, 15);
+    color: rgba(58, 58, 58, 0.9);
     transition: 0.2s;
     border-radius: 5px;
 }
@@ -127,27 +128,30 @@
     background-color: rgb(32, 32, 32);
 
 }
-.delete-button{
+
+.delete-button {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px 30px;
     font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
-    border: rgb(187, 0, 0);
+    border: rgba(255, 79, 79) 1px solid;
     cursor: pointer;
-    background-color: rgb(255, 0, 0);
-    color: rgb(255, 255, 255);
+    background-color: rgb(245, 245, 245);
+    color: rgba(255, 79, 79);
     transition: 0.2s;
     border-radius: 5px;
 }
-.delete-button:hover{
-    border: rgb(79, 0, 0);
+
+.delete-button:hover {
+    border: rgba(255, 79, 79, 0.5);
     cursor: pointer;
-    background-color: rgb(172, 0, 0);
-    color: rgb(255, 255, 255);
+    background-color: rgba(228, 228, 228, 0.5);
+    color: rgba(255, 79, 79, 0.9);
     transition: 0.2s;
-    border-radius: 1px;
+    border: rgba(255, 79, 79, 0.3) 1px solid;
 }
+
 .link-button {
     border: none;
     text-decoration: underline;
@@ -160,5 +164,26 @@
 
 .link-button:hover {
     color: rgb(119, 119, 119) !important;
+}
+
+.hide-password-toggle {
+    min-width: 40px;
+    max-height: 35px;
+    border: 1px solid rgba(92, 92, 92, 0.8);
+    border-radius: 5px;
+}
+
+
+@media (max-width: 768px) {
+    .normal-button {
+        font-size: 16px;
+    }
+
+    .hide-password-toggle {
+        max-height: 50px;
+        min-width: 50px;
+        border: 1px solid rgba(92, 92, 92, 0.5);
+    }
+
 
 }

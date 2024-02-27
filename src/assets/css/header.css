@@ -96,6 +96,7 @@ button.navbar-toggler:focus {
     border: rgb(57, 57, 57) solid 1px;
     border-radius: 1px !important;
     padding: 1em 0.5em 1em 0.5em;
+    margin-top: 0.7em;
     width: 14em !important;
 }
 

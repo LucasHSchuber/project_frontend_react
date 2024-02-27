@@ -7,6 +7,10 @@ input {
     padding-left: 0.5em;
 }
 
+input:focus {
+    outline-color: rgba(134, 134, 134, 0.3) !important;
+}
+
 label {
     color: rgb(255, 255, 255);
 }
@@ -21,12 +25,57 @@ input {
 }
 
 .error {
-    color: rgb(255, 59, 59);
+    color: rgb(255, 59, 59) !important;
     font-weight: 600;
+}
+
+.border-error {
+    border: 1px solid rgb(255, 59, 59) !important;
 }
 
 .hr {
     border: rgb(44, 44, 44, 0.1) solid 0.5px !important;
     margin-top: 0.6em !important;
     margin-bottom: 0.6em !important;
+}
+
+
+.validation-message {
+    position: fixed;
+    opacity: 1;
+    left: 0 !important;
+    bottom: 0;
+    margin-bottom: 3em;
+    margin-left: 2em;
+    padding: 1em 2em;
+    width: 20em;
+    height: fit-content;
+    background-color: #ffffff;
+    border: rgb(44, 44, 44, 0.5) solid 0.5px;
+    color: green;
+    font-size: 1em;
+    font-weight: 700;
+    animation: slide-in 0.5s ease-in-out forwards, fade-out 0.5s ease-in-out 4s forwards;
+    border-radius: 6px;
+    box-shadow: 0px 0px 5px rgba(134, 134, 134, 0.2);
+}
+
+@keyframes slide-in {
+    0% {
+        transform: translateX(-300%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }

@@ -1,7 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Navbar, Nav, Container, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import axios from 'axios';
+
+import { useAuth } from '../../assets/js/AuthContext';
+
 
 //import css
 import '../../assets/css/header.css';
@@ -23,30 +26,40 @@ function Header() {
 
   //define states
   const [expanded, setExpanded] = useState(false);
-  const [token, setToken] = useState("");
+  // const [token, setToken] = useState("");
   const [user, setUser] = useState([]);
   const [isCaretRotated, setIsCaretRotated] = useState(false);
 
+  // const location = useLocation();
+
+
+  const { isLoggedIn } = useAuth();
+
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // useEffect(() => {
+  //   setIsLoggedIn(location.state?.loggedIn || false);
+  // }, [location.state]);
 
 
 
-  //check if logged in
-  const checkIfTokenExists = () => {
-    let getToken = sessionStorage.getItem("token");
-    if (getToken) {
-      setToken(getToken);
-    }
-  }
-  useEffect(() => {
-    checkIfTokenExists();
-  }, []);
-  // Update token state whenever it changes
-  useEffect(() => {
-    checkIfTokenExists();
-  }, [token]);
+  // //check if logged in
+  // const checkIfTokenExists = () => {
+  //   let getToken = sessionStorage.getItem("token");
+  //   if (getToken) {
+  //     setToken(getToken);
+  //   }
+  // }
+  // useEffect(() => {
+  //   checkIfTokenExists();
+  // }, []);
+  // // Update token state whenever it changes
+  // useEffect(() => {
+  //   checkIfTokenExists();
+  // }, [token]);
 
 
-
+  console.log(isLoggedIn);
 
   useEffect(() => {
     //fetch user
@@ -54,9 +67,9 @@ function Header() {
       let id = sessionStorage.getItem("userid");
       console.log(id);
       try {
-        const response = await axios.get(`${URL}/${USER_ENDPOINT}/${id}`);
-        // console.log(response.data);
-        setUser(response.data);
+          const response = await axios.get(`${URL}/${USER_ENDPOINT}/${id}`);
+          // console.log(response.data);
+          setUser(response.data);
 
       } catch (error) {
         console.log(error);
@@ -78,10 +91,10 @@ function Header() {
   }
 
   return (
-    <Navbar expanded={expanded} className={`header ${token ? 'loggedin' : ''}`} expand="lg">
+    <Navbar expanded={expanded} className={`header ${isLoggedIn ? 'loggedin' : ''}`} expand="lg">
       <Container>
         <Navbar.Brand>
-          {token ? (
+          {isLoggedIn ? (
             <Nav.Link as={Link} to="/home" className='navbar-brand-link' >
               <img className="logo-img" src={logo} alt="logo img" ></img>
               MindSpace
@@ -102,14 +115,14 @@ function Header() {
 
         <Navbar.Collapse id="responsive-navbar-nav">
 
-          {token ? (
+          {isLoggedIn ? (
 
             <Nav className="nav-loggedin">
 
               <Nav.Link as={Link} to="/home" className='header-link' onClick={handleLinkClick}>
                 Home
               </Nav.Link>
-              <Nav.Link as={Link} to="/home" className='header-link' onClick={handleLinkClick}>
+              <Nav.Link as={Link} to="/nature" className='header-link' onClick={handleLinkClick}>
                 Nature
               </Nav.Link>
               <Nav.Link as={Link} to="/home" className='header-link' onClick={handleLinkClick}>

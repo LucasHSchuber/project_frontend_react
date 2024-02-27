@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Howl } from 'howler';
 import { Modal } from 'react-bootstrap';
+import { useAuth } from '../../assets/js/AuthContext';
 
 //import images
 import img1 from '../../assets/images/space2.jpg';
@@ -22,27 +23,38 @@ import '../../assets/css/global.css';
 
 //start apge
 function Myaccount() {
-
     //define states
     const [userInfo, setUserInfo] = useState([]);
     const [avatars, setAvatars] = useState([]);
     const [chosenAvatar, setChosenAvatar] = useState("");
+    const [hidePassword, setHidePassword] = useState(true);
+    const [showValidationMessage, setShowValidationMessage] = useState(false);
+    const [validationMessage, setValidationMessage] = useState('');
+
     const [openModal, setOpenModal] = useState(false);
-    // const [userData, setUserData] = useState({
-    //     email: '',
-    //     name: '',
-    //     username: '',
-    //     password: ''
-    // });
+    const [deleteAccountModal, setDeleteAccountModal] = useState(false);
+
     const [newEmail, setNewEmail] = useState("");
     const [newName, setNewName] = useState("");
     const [newUsername, setNewUsername] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
+    const [error, setError] = useState({
+        deleteAccount: "",
+        updateAccount: "",
+        updatePersonalInfo: ""
+    })
+
+    const { updateAuthStatus } = useAuth();
 
     const Navigate = useNavigate();
 
-    const fetchAvatas = async () => {
+    //addeventlisters
+
+
+
+    const fetchAvatars = async () => {
         try {
             const response = await axios.get(`${URL}/${AVATAR_ENDPOINT}`);
             console.log(response.data);
@@ -53,7 +65,7 @@ function Myaccount() {
         }
     }
     useEffect(() => {
-        fetchAvatas();
+        fetchAvatars();
     }, [])
 
     //When user selects an avatar
@@ -66,7 +78,15 @@ function Myaccount() {
         try {
             const response = await axios.post(`${URL}/${USER_ENDPOINT}/avatar?avatar=${avatarid}&userid=${userid}`);
             console.log(response.data);
-            fetchUser(); // load user again to update avatar img
+            setOpenModal(!openModal)
+            updateAuthStatus(true);
+            setShowValidationMessage(true);
+            setValidationMessage('Avatar updated succesfully <i class="fa-solid fa-check-double"></i>')
+            setTimeout(() => {
+                setShowValidationMessage(false);
+            }, 5000);
+            fetchUser();
+
         } catch (error) {
             console.log(error);
         }
@@ -83,15 +103,41 @@ function Myaccount() {
             Name: newName
         };
         console.log(data);
-        try {
-            const response = await axios.put(`${URL}/${USER_ENDPOINT}/${id}`, data);
-            console.log(response.data);
-            setNewEmail("");
-            setNewName("");
-            setNewUsername("");
 
-        } catch (error) {
-            console.log(error);
+        //checks so input fields are not empty
+        if (newEmail != "" || newUsername != "" || newName != "") {
+
+            // eslint-disable-next-line no-restricted-globals
+            if (confirm("Are you sure you want to update the following field(s):\n\n" +
+                (newEmail != "" ? "New email: " + newEmail + "\n" : "") +
+                (newUsername != "" ? "New username: " + newUsername + "\n" : "") +
+                (newName != "" ? "New name: " + newName + "\n" : "")
+            )) {
+                try {
+                    const response = await axios.put(`${URL}/${USER_ENDPOINT}/${id}`, data);
+                    console.log(response.data);
+                    setNewEmail("");
+                    setNewName("");
+                    setNewUsername("");
+                    fetchUser();
+
+                    setShowValidationMessage(true);
+                    setValidationMessage('User updated succesfully <i class="fa-solid fa-check-double"></i>')
+                    setTimeout(() => {
+                        setShowValidationMessage(false);
+                    }, 5000);
+
+                    updateAuthStatus(true);
+
+                } catch (error) {
+                    console.log(error);
+                }
+            } else {
+                console.log("Canceled delete account");
+            }
+        } else {
+            setError({ ...error, updatePersonalInfo: "Invalid input" });
+            return;
         }
     };
 
@@ -103,29 +149,52 @@ function Myaccount() {
             PasswordHash: newPassword
         };
         console.log(data);
+        if (newPassword === "") {
+            setError({ ...error, updateAccount: "Invalid input" });
+            return;
+        }
         try {
             const response = await axios.put(`${URL}/${USER_ENDPOINT}/${id}`, data);
             console.log(response.data);
             setNewPassword("");
 
+            setShowValidationMessage(true);
+            setValidationMessage('Password updated succesfully <i class="fa-solid fa-check-double"></i>')
+            setTimeout(() => {
+                setShowValidationMessage(false);
+            }, 5000);
+
+            fetchUser();
+
         } catch (error) {
             console.log(error);
         }
     };
+
+    const toggleDeleteAccountModal = () => {
+        setDeleteAccountModal(!deleteAccountModal);
+    }
     //delete user account
     const deleteAccount = async () => {
         let id = sessionStorage.getItem("userid");
-        try {
-            const response = await axios.delete(`${URL}/${USER_ENDPOINT}/${id}`);
-            console.log(response.data);
+        if (confirmPassword !== null && confirmPassword !== "") {
+            try {
+                const response = await axios.delete(`${URL}/${USER_ENDPOINT}/${id}?passwordConfirm=${confirmPassword}`);
+                console.log(response.data);
 
-            sessionStorage.removeItem('token');
-            sessionStorage.removeItem('userid');
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('userid');
 
-            Navigate("/index");
+                Navigate("/index");
 
-        } catch (error) {
-            console.log(error);
+            } catch (error) {
+                console.log(error);
+                setConfirmPassword("");
+                setError({ ...error, deleteAccount: error.response.data });
+            }
+        }else{
+            setError({ ...error, deleteAccount: "Invalid input" });
+
         }
     };
 
@@ -162,7 +231,7 @@ function Myaccount() {
 
 
     //toggle modal
-    const toggleModal = () => {
+    const toggleAvatarModal = () => {
         setOpenModal(!openModal);
     }
 
@@ -218,29 +287,29 @@ function Myaccount() {
                         <div className="form-group">
                             {userInfo && userInfo.avatar && (
                                 <div key={userInfo.userId}>
-                                    <div className='d-flex input-box'>
+                                    <div className='d-flex input-box justify-content-end'>
                                         <label> {userInfo.email}</label>
-                                        <input className='account-input mb-3 mb-md-0' type="email" id="email" name="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
+                                        <input className={`account-input mb-3 mb-md-0 ${error.updatePersonalInfo ? "error border-error" : ""}`} type="email" id="email" name="email" required placeholder={error.updatePersonalInfo ? error.updatePersonalInfo : "Change email"} value={newEmail} onChange={(e) => setNewEmail(e.target.value)} onFocus={() => setError({ ...error, updatePersonalInfo: "" })} />
                                     </div>
-                                    <div className='d-flex input-box'>
+                                    <div className='d-flex input-box justify-content-end'>
                                         <label>Name: {userInfo.name}</label>
-                                        <input className='account-input mb-3 mb-md-0' type="text" id="name" name="name" value={newName} onChange={(e) => setNewName(e.target.value)} />
+                                        <input className={`account-input mb-3 mb-md-0 ${error.updatePersonalInfo ? "error border-error" : ""}`} type="text" id="name" name="name" required placeholder={error.updatePersonalInfo ? error.updatePersonalInfo : "Change name"} value={newName} onChange={(e) => setNewName(e.target.value)} onFocus={() => setError({ ...error, updatePersonalInfo: "" })} />
                                     </div>
-                                    <div className='d-flex input-box'>
+                                    <div className='d-flex input-box justify-content-end'>
                                         <label>Username: {userInfo.username}</label>
-                                        <input className='account-input mb-3 mb-md-0' type="text" id="username" name="username" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
+                                        <input className={`account-input mb-3 mb-md-0 ${error.updatePersonalInfo ? "error border-error" : ""}`} type="text" id="username" name="username" required placeholder={error.updatePersonalInfo ? error.updatePersonalInfo : "Change username"} value={newUsername} onChange={(e) => setNewUsername(e.target.value)} onFocus={() => setError({ ...error, updatePersonalInfo: "" })} />
                                     </div>
-                                    <button onClick={updateUser}>Change</button>
+                                    <button className='normal-button my-1' style={{ float: "right" }} onClick={updateUser}>Update</button>
                                 </div>
 
                             )}
                         </div>
                     </div>
-                    <div>
+                    <div className='mt-5 mb-3'>
                         {userInfo.avatar && (
                             <div key={userInfo.userId} className='my-4'>
                                 <img className="settings-avatar-image" src={`${URL}/imgupload/${userInfo.avatar.avatarImageName}`} alt="Avatar" />
-                                <button className="link-button mx-3" onClick={toggleModal}>Change&nbsp;<i class="fa-solid fa-right-left"></i></button>
+                                <button className="link-button mx-3" onClick={toggleAvatarModal}>Change&nbsp;<i class="fa-solid fa-right-left"></i></button>
                             </div>
                         )}
                     </div>
@@ -255,11 +324,24 @@ function Myaccount() {
                         </div>
                         <div className="security-labels">
                             <div className="form-group">
+                                {/* <div>
+                                    {error.updateAccount && (
+                                        <ul className='error' style={{ float: "right" }}>
+                                            <li>{error.updateAccount}</li>
+                                        </ul>
+                                    )}
+                                </div> */}
                                 {userInfo && (
-                                    <div key={userInfo.userId}>
-                                        <label>Password: ********</label>
-                                        <input className='account-input mb-3 mb-md-0' placeholder="Change password" type="email" id="email" name="email" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-                                        <button onClick={updatePassword}>Update password</button>
+                                    <div key={userInfo.userId} className=''>
+                                        <div className='d-flex input-box justify-content-end'>
+                                            <label>Password: ******** </label>
+                                            <input className={`account-input mb-3 mb-md-0 ${error.updateAccount ? "error border-error" : ""}`} placeholder={error.updateAccount ? error.updateAccount : "Change password"} type={hidePassword ? "password" : "text"} id="newpassword" name="newpassword" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} onFocus={() => setError({ ...error, updateAccount: "" })}
+                                            />
+                                            <button className='hide-password-toggle' onClick={() => setHidePassword(!hidePassword)}> {hidePassword ? <i class="fa-regular fa-eye"></i> : <i class="fa-regular fa-eye-slash"></i>} </button>
+                                        </div>
+                                        <div>
+                                            <button className='normal-button my-1' style={{ float: "right" }} onClick={updatePassword}>Update password</button>
+                                        </div>
                                     </div>
                                 )}
                             </div>
@@ -269,7 +351,7 @@ function Myaccount() {
                     <div className='delete-account-box'>
                         <h6><b>Delete account</b></h6>
                         <p><em>Be aware of that once you have deleted your account your account will be lost forever</em></p>
-                        <button className='delete-button' onClick={deleteAccount}>Delete account</button>
+                        <button className='delete-button' onClick={toggleDeleteAccountModal}>Delete account</button>
                     </div>
                 </div>
 
@@ -278,10 +360,10 @@ function Myaccount() {
 
 
             {/* change avatar modal */}
-            <Modal show={openModal} onHide={toggleModal} className='avatar-modal'>
+            <Modal show={openModal} onHide={toggleAvatarModal} className='avatar-modal'>
                 <Modal.Header className='avatar-modal-header'>
                     <Modal.Title >Change Avatar</Modal.Title>
-                    <button type="button" className="close" aria-label="Close" onClick={toggleModal}>
+                    <button type="button" className="close" aria-label="Close" onClick={toggleAvatarModal}>
                         <i style={{ color: "white" }} class="fa-solid fa-xmark"></i>
                     </button>
                 </Modal.Header>
@@ -306,14 +388,52 @@ function Myaccount() {
                             </div>
                         ))}
                         <div style={{ margin: "0 auto" }}>
-                            <button className="gradient-button my-3" type='submit' onClick={() => selectedAvatar(chosenAvatar)}>Choose avatar</button>
+                            <button className="normal-button my-3" type='submit' onClick={() => selectedAvatar(chosenAvatar)}>Choose avatar</button>
                         </div>
                     </div>
                 </Modal.Body>
             </Modal>
 
+            {/* delete account modal */}
+            <Modal show={deleteAccountModal} onHide={toggleDeleteAccountModal} className='delete-account-modal'>
+                {/* <Modal.Header>
+                    <Modal.Title >Delete account</Modal.Title>
+                    <button type="button" className="close" aria-label="Close" onClick={toggleDeleteAccountModal}>
+                        <i style={{ color: "white" }} class="fa-solid fa-xmark"></i>
+                    </button>
+                </Modal.Header> */}
+                <Modal.Body>
+                    <button type="button" className="close" aria-label="Close" onClick={toggleDeleteAccountModal}>
+                        <i style={{ color: "white" }} class="fa-solid fa-xmark"></i>
+                    </button>
+                    <div className='py-2'>
+                        <h6>To delete your account enter your password and press "delete account" button</h6>
+                        <p><em>This action can not be undone</em></p>
+                        <input className={`account-input mb-3 mb-md-0 ${error.deleteAccount ? "error border-error" : ""}`} placeholder={error.deleteAccount ? error.deleteAccount : "Your password"} type="password" id="confirmpassword" name="confirmpassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} onFocus={() => setError({ ...error, deleteAccount: "" })} />
+                        {error.deleteAccount == "Incorrect password" && (
+                            <ul className='error my-2'>
+                                <li>{error.deleteAccount}</li>
+                            </ul>
+                        )}
+                    </div>
+                    <div>
+                        <button className="delete-button my-2" type='submit' style={{ width: "100% " }} onClick={deleteAccount}>Delete account</button>
+                    </div>
+                    {/* <div>
+                        <button className="normal-button my-2" type='submit' onClick={toggleDeleteAccountModal} >Close <i class="fa-solid fa-xmark"></i></button>
+                    </div> */}
+                </Modal.Body>
+            </Modal>
 
-        </div>
+
+
+            {showValidationMessage && (
+                <div className="validation-message" dangerouslySetInnerHTML={{ __html: validationMessage }} />
+            )}
+
+
+
+        </div >
 
     );
 

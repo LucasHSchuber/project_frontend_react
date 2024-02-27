@@ -74,6 +74,7 @@ function Home() {
             console.log(error);
         }
     }
+
     //remove an audio from the list
     const removeFromList = async (audioId) => {
 
@@ -228,51 +229,158 @@ function Home() {
             )}
 
 
+            <div class="mx-4 home-cards-sections">
 
-            {/* Cards containers */}
-            <div className="audio-cards-container">
-                {audios.map((audio) => (
-                    <div key={audio.audioID} className="audio-card">
-                        <div className="audio-image" style={{ backgroundImage: `url(${URL}/imgupload/${audio.imageName})` }}>
-                            <audio className="audio" controls src={`${URL}/audioupload/${audio.filePath}`}
-                                onPause={() => handleAudioPause(audio.filePath)}
-                                onPlay={() => handleAudioPlay(audio.filePath)}
-                            ></audio>
-                            <div className='audio-image-text'>
-                                <h5 className='text'>{audio.title}</h5>
-                                <p className='text'>{audio.categoryName}</p>
+                {/* Cards containers */}
+                <div className="audio-cards-container">
+                    {audios.map((audio) => (
+                        <div key={audio.audioID} className="audio-card">
+                            <div className="audio-image" style={{ backgroundImage: `url(${URL}/imgupload/${audio.imageName})` }}>
+                                <audio className="audio" controls src={`${URL}/audioupload/${audio.filePath}`}
+                                    onPause={() => handleAudioPause(audio.filePath)}
+                                    onPlay={() => handleAudioPlay(audio.filePath)}
+                                ></audio>
+                                <div className='audio-image-text'>
+                                    <h5 className='text'>{audio.title}</h5>
+                                    <p className='text'>{audio.categoryName}</p>
+                                </div>
+                            </div>
+                            <div className="audio-details">
+                                <h3>{audio.title}</h3>
+                                <p>{audio.description}</p>
+                                <div className='d-flex'>
+                                    <button
+                                        className='addtolist-button'
+                                        // value={audio.audioID}
+                                        onClick={() => { userAudioIDs.includes(audio.audioID) ? removeFromList(audio.audioID) : addToList(audio.audioID) }}
+                                    >
+                                        {userAudioIDs.includes(audio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
+                                    </button>
+                                    <button
+                                        className='addtolist-button'
+                                    >
+                                        <i class="fa-regular fa-heart"></i>
+                                    </button>
+                                    <button
+                                        className='addtolist-button'
+                                        onClick={() => {
+                                            openInfoModal(audio);
+                                            fetchAudiosByCategory(audio.categoryName);
+                                        }
+                                        }
+                                    >
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div className="audio-details">
-                            <h3>{audio.title}</h3>
-                            <p>{audio.description}</p>
-                            <div className='d-flex'>
-                                <button
-                                    className='addtolist-button'
-                                    // value={audio.audioID}
-                                    onClick={() => { userAudioIDs.includes(audio.audioID) ? removeFromList(audio.audioID) : addToList(audio.audioID) }}
-                                >
-                                    {userAudioIDs.includes(audio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
-                                </button>
-                                <button
-                                    className='addtolist-button'
-                                >
-                                    <i class="fa-regular fa-heart"></i>
-                                </button>
-                                <button
-                                    className='addtolist-button'
-                                    onClick={() => {
-                                        openInfoModal(audio);
-                                        fetchAudiosByCategory(audio.categoryName);
-                                    }
-                                    }
-                                >
-                                    <i class="fa-solid fa-chevron-down"></i>
-                                </button>
+                    ))}
+                </div>
+
+                <div className='mx-5 my-4 home-title'>
+                    <h2>Latest meditations</h2>
+                </div>
+
+
+                {/* Cards containers */}
+                <div className="audio-cards-container">
+                    {audios.slice(-5).map((audio) => (
+                        <div key={audio.audioID} className="audio-card">
+                            <div className="audio-image" style={{ backgroundImage: `url(${URL}/imgupload/${audio.imageName})` }}>
+                                <audio className="audio" controls src={`${URL}/audioupload/${audio.filePath}`}
+                                    onPause={() => handleAudioPause(audio.filePath)}
+                                    onPlay={() => handleAudioPlay(audio.filePath)}
+                                ></audio>
+                                <div className='audio-image-text'>
+                                    <h5 className='text'>{audio.title}</h5>
+                                    <p className='text'>{audio.categoryName}</p>
+                                </div>
+                            </div>
+                            <div className="audio-details">
+                                <h3>{audio.title}</h3>
+                                <p>{audio.description}</p>
+                                <div className='d-flex'>
+                                    <button
+                                        className='addtolist-button'
+                                        // value={audio.audioID}
+                                        onClick={() => { userAudioIDs.includes(audio.audioID) ? removeFromList(audio.audioID) : addToList(audio.audioID) }}
+                                    >
+                                        {userAudioIDs.includes(audio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
+                                    </button>
+                                    <button
+                                        className='addtolist-button'
+                                    >
+                                        <i class="fa-regular fa-heart"></i>
+                                    </button>
+                                    <button
+                                        className='addtolist-button'
+                                        onClick={() => {
+                                            openInfoModal(audio);
+                                            fetchAudiosByCategory(audio.categoryName);
+                                        }
+                                        }
+                                    >
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
+
+
+                <div className='mx-5 my-4 home-title'>
+                    <h2>Meditations on your list</h2>
+                </div>
+
+
+                {/* Cards containers */}
+                <div className="audio-cards-container">
+                    {audios.filter(audio => userAudioIDs.includes(audio.audioID)).slice(-5).map((audio) => (
+                        <div key={audio.audioID} className="audio-card">
+                            <div className="audio-image" style={{ backgroundImage: `url(${URL}/imgupload/${audio.imageName})` }}>
+                                <audio className="audio" controls src={`${URL}/audioupload/${audio.filePath}`}
+                                    onPause={() => handleAudioPause(audio.filePath)}
+                                    onPlay={() => handleAudioPlay(audio.filePath)}
+                                ></audio>
+                                <div className='audio-image-text'>
+                                    <h5 className='text'>{audio.title}</h5>
+                                    <p className='text'>{audio.categoryName}</p>
+                                </div>
+                            </div>
+                            <div className="audio-details">
+                                <h3>{audio.title}</h3>
+                                <p>{audio.description}</p>
+                                <div className='d-flex'>
+                                    <button
+                                        className='addtolist-button'
+                                        // value={audio.audioID}
+                                        onClick={() => { userAudioIDs.includes(audio.audioID) ? removeFromList(audio.audioID) : addToList(audio.audioID) }}
+                                    >
+                                        {userAudioIDs.includes(audio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
+                                    </button>
+                                    <button
+                                        className='addtolist-button'
+                                    >
+                                        <i class="fa-regular fa-heart"></i>
+                                    </button>
+                                    <button
+                                        className='addtolist-button'
+                                        onClick={() => {
+                                            openInfoModal(audio);
+                                            fetchAudiosByCategory(audio.categoryName);
+                                        }
+                                        }
+                                    >
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+
             </div>
 
 
