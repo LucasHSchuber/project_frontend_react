@@ -23,15 +23,13 @@ function Index() {
     //define states
     const [email, setEmail] = useState("");
 
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
 
 
 
-    
+
     const checkEmail = async (e) => {
         e.preventDefault();
-
-        console.log(email);
 
         console.log(`${URL}/${USER_ENDPOINT}/checkEmail`);
         try {
@@ -39,16 +37,15 @@ function Index() {
             console.log(response.data);
 
             if (response.data.exists == true) {
-                Navigate("/login");
+                navigate("/login", { state: { _email: email } });
             } else {
-                Navigate("/newaccount");
+                navigate("/newaccount", { state: { _email: email } });
             }
 
         } catch (error) {
             console.log(error);
 
         }
-
     }
 
 

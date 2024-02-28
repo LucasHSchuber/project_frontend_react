@@ -2,50 +2,82 @@ import React, { createContext, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 
-//import css
-import '../../assets/css/header.css';
-// import logo from '../../assets/images/mountain2.png';
-
-// Importing api url and enpoints
-// import { BASE_URL, BASE_URL2, ITEM_ENDPOINT, CATEGORY_ENDPOINT, INFORMATION_ENDPOINT, UNIT_ENDPOINT } from '../../api';
+import { useAuth } from '../../assets/js/AuthContext';
 
 //import css
 import '../../assets/css/footer.css';
+//import images
+import logo from '../../assets/images/pray.png';
 
 
 
-//start apge
+
+
+
+
+
 function Footer() {
 
 
+    const { isLoggedIn } = useAuth();
+    console.log(isLoggedIn);
+
+
+
     return (
-        <div className='footer-wrapper' id="footer-wrapper" >
+        <footer className="footer">
+            <Container>
+                <Navbar.Brand className='mb-3'>
+                    {isLoggedIn ? (
+                        <Link to="/" className='footer-brand-link'>
+                            <img className="logo-img" src={logo} alt="logo img" ></img>
+                            MindSpace
+                        </Link>
+                    ) : (
+                        <Link to="/" className='footer-brand-link'>
+                            <img className="logo-img" src={logo} alt="logo img" ></img>
+                            MindSpace
+                        </Link>
+                    )}
+                </Navbar.Brand>
+                <Nav className="d-flex justify-content-center">
+                    {isLoggedIn ? (
+                        <div>
+                            <Link to="/home" className='footer-link'>Home</Link>
+                            <Link to="/nature" className='footer-link'>Nature</Link>
+                            <Link to="/bodyscan" className='footer-link'>Body Scan</Link>
+                            <Link to="/talkdown" className='footer-link'>Talk down</Link>
+                            <Link to="/myaccount" className='footer-link'>Your Account</Link>
+                            <Link to="/mylist" className='footer-link'>My List</Link>
+                            <Link to="/myfavorites" className='footer-link'>Favorites</Link>
+                            <Link to="/logout" className='footer-link'>Logout</Link>
+                        </div>
+                    ) : (
+                        <div>
+                            <Link to="/" className='footer-link'>Home</Link>
+                            <Link to="/login" className='footer-link'>Login</Link>
+                            <Link to="/newaccount" className='footer-link'>New account</Link>
+                        </div>
+                    )}
+                </Nav>
 
-            <Navbar className='footer' expand="lg">
-                <Container>
-                    <Navbar.Brand>
-                        <Nav.Link as={Link} to="/index" className='footer-brand-link' >
-                            Space
-                            {/* <img className="logo-img" src={logo} alt="logo img" ></img> */}
-                        </Nav.Link>
-                    </Navbar.Brand>
-
-                    <Nav className="mr-auto">
-                        <Nav.Link as={Link} to="/login" className='footer-link' >
-                            Login
-                        </Nav.Link>
-                        <Nav.Link as={Link} to="/newaccount" className='footer-link'>
-                            New account
-                        </Nav.Link>
-                    </Nav>
-
-                </Container>
-            </Navbar>
-
-        </div>
+                <Nav className="social-icons d-flex justify-content-center my-4">
+                    <Nav.Link href="https://www.facebook.com/" target="_blank">
+                        <i className="fab fa-facebook"></i>
+                    </Nav.Link>
+                    <Nav.Link href="https://twitter.com/" target="_blank">
+                        <i className="fab fa-twitter"></i>
+                    </Nav.Link>
+                    <Nav.Link href="https://www.instagram.com/" target="_blank">
+                        <i className="fab fa-instagram"></i>
+                    </Nav.Link>
+                    <Nav.Link href="https://www.linkedin.com/" target="_blank">
+                        <i className="fab fa-linkedin"></i>
+                    </Nav.Link>
+                </Nav>
+            </Container>
+        </footer>
     );
-
-
 }
 
 export default Footer;

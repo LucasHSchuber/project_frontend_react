@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Howl } from 'howler';
 
@@ -32,10 +32,20 @@ function Newaccount() {
   const [password, setPassword] = useState("");
   const [rpassword, setRPassword] = useState("");
 
+  const [error, setError] = useState([]);
+
   const Navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    if (location.state && location.state._email) {
+      setEmail(location.state._email);
+    }
+  }, [location.state]);
 
 
 
+
+  //create new user
   const postNewUser = async (e) => {
     e.preventDefault();
 
@@ -45,9 +55,7 @@ function Newaccount() {
     console.log(password);
     console.log(rpassword);
 
-    console.log(`${URL}/${USER_ENDPOINT}`);
     try {
-
       const response = await axios.post(`${URL}/${USER_ENDPOINT}/?rpassword=${rpassword}`, {
         Username: username,
         Name: name,
@@ -56,10 +64,11 @@ function Newaccount() {
       });
       console.log(response.data);
 
-      Navigate("/login");
+      Navigate("/login", {state: { _email:email }});
 
     } catch (error) {
       console.log(error);
+      setError(error.response.data)
     }
   }
 
@@ -218,6 +227,17 @@ function Newaccount() {
       <div className='page-content'>
         <form onSubmit={postNewUser}>
           <h3 className='mb-4'>Create new account</h3>
+
+          <ul>
+            {error.length > 0 && (
+              error.map((err, index) => (
+                <div key={index} className='error'>
+                  <li>{err}</li>
+                </div>
+              ))
+            )}
+          </ul>
+
 
           <label>Name</label>
           <input

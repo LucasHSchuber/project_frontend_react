@@ -35,6 +35,7 @@ function Home() {
     const [playingAudio, setPlayingAudio] = useState("");
     const [audiosByCategory, setAudiosByCategory] = useState([]);
     const [randomInt, setRandomInt] = useState(0);
+    const [screenSize, setScreenSize] = useState(0);
 
     const [showValidationMessage, setShowValidationMessage] = useState(false);
     const [validationMessage, setValidationMessage] = useState('');
@@ -73,7 +74,6 @@ function Home() {
             console.log(response.data);
             const addedAudioIDs = response.data.map(userAudio => userAudio.audioId);
             setUserAudioIDs(addedAudioIDs);
-            console.log(addedAudioIDs);
 
         } catch (error) {
             console.log(error);
@@ -83,8 +83,6 @@ function Home() {
     const addToList = async (audioid) => {
 
         let id = sessionStorage.getItem("userid");
-        console.log(id);
-        console.log(audioid);
 
         const data = {
             UserId: id,
@@ -110,8 +108,6 @@ function Home() {
     const removeFromList = async (audioId) => {
 
         let userId = sessionStorage.getItem("userid");
-        console.log(userId);
-        console.log(audioId);
 
         try {
             const response = await axios.delete(`${URL}/${USERAUDIO_ENDPOINT}/${userId}/${audioId}`);
@@ -139,7 +135,6 @@ function Home() {
     const getAddedFavoriteAudios = async () => {
 
         let id = sessionStorage.getItem("userid");
-        console.log(id);
 
         try {
             const response = await axios.get(`${URL}/${LIKE_ENDPOINT}/${id}`);
@@ -161,8 +156,6 @@ function Home() {
     const addToFavoriteList = async (audioid) => {
 
         let id = sessionStorage.getItem("userid");
-        console.log(id);
-        console.log(audioid);
 
         const data = {
             UserId: id,
@@ -188,8 +181,6 @@ function Home() {
     const removeFromFavoriteList = async (audioId) => {
 
         let userId = sessionStorage.getItem("userid");
-        console.log(userId);
-        console.log(audioId);
 
         try {
             const response = await axios.delete(`${URL}/${LIKE_ENDPOINT}/${userId}/${audioId}`);
@@ -269,6 +260,29 @@ function Home() {
         setModalAudio(audio);
     }
 
+    //print different amount of cards dependning on window.innerWidth
+    useEffect(() => {
+        const screenSizeHandler = () => {
+            if (window.innerWidth > 1846) {
+                setScreenSize(7);
+            }
+            else if (window.innerWidth > 1588) {
+                setScreenSize(6);
+            } else if (window.innerWidth > 1320) {
+                setScreenSize(5);
+            } else {
+                setScreenSize(4);
+            }
+        };
+
+        window.addEventListener("resize", screenSizeHandler);
+        screenSizeHandler();
+
+        return () => {
+            window.removeEventListener("resize", screenSizeHandler);
+        };
+    }, []);
+
 
 
 
@@ -277,12 +291,11 @@ function Home() {
 
             {/* Hero Section */}
             {audios.length > 0 && (
-                <div className="hero-section" style={{ backgroundImage: `url(${URL}/imgupload/${audios[randomInt].imageName})` }}>
+                <div className="hero-section" style={{ backgroundImage: `url(${URL}/imgupload/${audios[randomInt].imageNameOriginal ? audios[randomInt].imageNameOriginal : audios[randomInt].imageName})` }}>
                     <div className="hero-details">
 
-                        {/* indicating on playing sound */}
                         <div className='d-flex'>
-                            <h1>{audios[randomInt].title}</h1>
+                            <h2>{audios[randomInt].title}</h2>
                             {/* <div>
                                 {playingAudio === audios[randomInt].audioID && (
                                     <iframe className='soundwave-gif' style={{ marginTop: "1em" }} src="https://giphy.com/embed/CpDS8OlJaV3MLsjROZ" width="40" height="30" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
@@ -291,8 +304,8 @@ function Home() {
                         </div>
 
                         <div className={`hero-part-details ${!showHeroDetails ? 'hidden' : ''} ${!minimizeBox ? 'hiddenbox' : ''}`} id='hero-part-details'>
-                            <p><em>{audios[randomInt].categoryName}</em></p>
-                            <p>{audios[randomInt].description}</p>
+                            <p><em><img className="" style={{ width: "20px", marginBottom: "0.5em" }} src={logo} alt="logo img" ></img> {audios[randomInt].categoryName}</em></p>
+                            <p>{audios[randomInt].description.length > 75 ? audios[randomInt].description.substring(0, 75) + "..." : audios[randomInt].description}</p>
                         </div>
 
                         <div className='hero-audio-box'>
@@ -346,12 +359,12 @@ function Home() {
                                 ></audio>
                                 <div className='audio-image-text'>
                                     <h5 className='text'>{audio.title}</h5>
-                                    <p className='text'>{audio.categoryName}</p>
+                                    <p className='text'>  <img className="" style={{ width: "18px", marginBottom: "0.4em" }} src={logo} alt="logo img" ></img> {audio.categoryName}</p>
                                 </div>
                             </div>
                             <div className="audio-details">
                                 <h3>{audio.title}</h3>
-                                <p>{audio.description}</p>
+                                <p>{audio.description.length > 50 ? audio.description.substring(0, 50) + "..." : audio.description}</p>
                                 <div className='d-flex'>
                                     <button
                                         className='addtolist-button'
@@ -386,10 +399,9 @@ function Home() {
                     <h2>Latest meditations</h2>
                 </div>
 
-
                 {/* Cards containers */}
                 <div className="audio-cards-container">
-                    {audios.slice(-5).map((audio) => (
+                    {audios.slice(-screenSize).map((audio) => (
                         <div key={audio.audioID} className="audio-card">
                             <div className="audio-image" style={{ backgroundImage: `url(${URL}/imgupload/${audio.imageName})` }}>
                                 <audio className="audio" controls src={`${URL}/audioupload/${audio.filePath}`}
@@ -398,12 +410,12 @@ function Home() {
                                 ></audio>
                                 <div className='audio-image-text'>
                                     <h5 className='text'>{audio.title}</h5>
-                                    <p className='text'>{audio.categoryName}</p>
+                                    <p className='text'>  <img className="" style={{ width: "18px", marginBottom: "0.4em" }} src={logo} alt="logo img" ></img> {audio.categoryName}</p>
                                 </div>
                             </div>
                             <div className="audio-details">
                                 <h3>{audio.title}</h3>
-                                <p>{audio.description}</p>
+                                <p>{audio.description.length > 50 ? audio.description.substring(0, 50) + "..." : audio.description}</p>
                                 <div className='d-flex'>
                                     <button
                                         className='addtolist-button'
@@ -434,57 +446,58 @@ function Home() {
                     ))}
                 </div>
 
-
-                <div className='mx-5 my-4 home-title'>
-                    <h2>Meditations on your list</h2>
-                </div>
-
+                {audios.filter(audio => userAudioIDs.includes(audio.audioID)).length > 0 && (
+                    <div className='mx-5 my-4 home-title'>
+                        <h2>Meditations on your list</h2>
+                    </div>
+                )}
 
                 {/* Cards containers */}
                 <div className="audio-cards-container">
-                    {audios.filter(audio => userAudioIDs.includes(audio.audioID)).slice(-5).map((audio) => (
-                        <div key={audio.audioID} className="audio-card">
-                            <div className="audio-image" style={{ backgroundImage: `url(${URL}/imgupload/${audio.imageName})` }}>
-                                <audio className="audio" controls src={`${URL}/audioupload/${audio.filePath}`}
-                                    onPause={() => handleAudioPause(audio.filePath)}
-                                    onPlay={() => handleAudioPlay(audio.filePath)}
-                                ></audio>
-                                <div className='audio-image-text'>
-                                    <h5 className='text'>{audio.title}</h5>
-                                    <p className='text'>{audio.categoryName}</p>
+                    {
+                        audios.filter(audio => userAudioIDs.includes(audio.audioID)).slice(-screenSize).map((audio) => (
+                            <div key={audio.audioID} className="audio-card">
+                                <div className="audio-image" style={{ backgroundImage: `url(${URL}/imgupload/${audio.imageName})` }}>
+                                    <audio className="audio" controls src={`${URL}/audioupload/${audio.filePath}`}
+                                        onPause={() => handleAudioPause(audio.filePath)}
+                                        onPlay={() => handleAudioPlay(audio.filePath)}
+                                    ></audio>
+                                    <div className='audio-image-text'>
+                                        <h5 className='text'>{audio.title}</h5>
+                                        <p className='text'>  <img className="" style={{ width: "18px", marginBottom: "0.4em" }} src={logo} alt="logo img" ></img> {audio.categoryName}</p>
+                                    </div>
+                                </div>
+                                <div className="audio-details">
+                                    <h3>{audio.title}</h3>
+                                    <p>{audio.description.length > 50 ? audio.description.substring(0, 50) + "..." : audio.description}</p>
+                                    <div className='d-flex'>
+                                        <button
+                                            className='addtolist-button'
+                                            onClick={() => { userAudioIDs.includes(audio.audioID) ? removeFromList(audio.audioID) : addToList(audio.audioID) }}
+                                        >
+                                            {userAudioIDs.includes(audio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
+                                        </button>
+                                        <button
+                                            className='addtolist-button'
+                                            onClick={() => { userFavoriteIDs.includes(audio.audioID) ? removeFromFavoriteList(audio.audioID) : addToFavoriteList(audio.audioID) }}
+                                        >
+                                            {userFavoriteIDs.includes(audio.audioID) ? <i class="fa-solid fa-heart-circle-minus"></i> : <i class="fa-regular fa-heart"></i>}
+                                        </button>
+                                        <button
+                                            className='addtolist-button'
+                                            onClick={() => {
+                                                openInfoModal(audio);
+                                                fetchAudiosByCategory(audio.categoryName);
+                                            }
+                                            }
+                                        >
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="audio-details">
-                                <h3>{audio.title}</h3>
-                                <p>{audio.description}</p>
-                                <div className='d-flex'>
-                                    <button
-                                        className='addtolist-button'
-                                        // value={audio.audioID}
-                                        onClick={() => { userAudioIDs.includes(audio.audioID) ? removeFromList(audio.audioID) : addToList(audio.audioID) }}
-                                    >
-                                        {userAudioIDs.includes(audio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
-                                    </button>
-                                    <button
-                                        className='addtolist-button'
-                                        onClick={() => { userFavoriteIDs.includes(audio.audioID) ? removeFromFavoriteList(audio.audioID) : addToFavoriteList(audio.audioID) }}
-                                    >
-                                        {userFavoriteIDs.includes(audio.audioID) ? <i class="fa-solid fa-heart-circle-minus"></i> : <i class="fa-regular fa-heart"></i>}
-                                    </button>
-                                    <button
-                                        className='addtolist-button'
-                                        onClick={() => {
-                                            openInfoModal(audio);
-                                            fetchAudiosByCategory(audio.categoryName);
-                                        }
-                                        }
-                                    >
-                                        <i class="fa-solid fa-chevron-down"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                        ))
+                    }
                 </div>
 
 
@@ -492,104 +505,108 @@ function Home() {
 
 
             {/* Audio info modal */}
-            {modalAudio && (
-                <Modal show={openModal} onHide={openInfoModal} className='info-modal'>
-                    {/* <Modal.Header>
+            {
+                modalAudio && (
+                    <Modal show={openModal} onHide={openInfoModal} className='info-modal'>
+                        {/* <Modal.Header>
                         <Modal.Title>{modalAudio.title}</Modal.Title>
                         <button type="button" className="close" aria-label="Close" onClick={openInfoModal}>
                             <i style={{ color: "white" }} class="fa-solid fa-xmark"></i>
                         </button>
                     </Modal.Header> */}
-                    <Modal.Body className='info-modal-body'>
-                        <button type="button" className="close-button info-modal-close" aria-label="Close" onClick={() => {
-                            openInfoModal();
-                            setAudiosByCategory([]);
-                        }}
-                        >
-                            <i style={{ color: "white" }} class="fa-solid fa-xmark"></i>
-                        </button>
+                        <Modal.Body className='info-modal-body'>
+                            <button type="button" className="close-button info-modal-close" aria-label="Close" onClick={() => {
+                                openInfoModal();
+                                setAudiosByCategory([]);
+                            }}
+                            >
+                                <i style={{ color: "white" }} class="fa-solid fa-xmark"></i>
+                            </button>
 
-                        <img
-                            src={`${URL}/imgupload/${modalAudio.imageName}`}
-                            alt={modalAudio.audioID}
-                        />
+                            <img
+                                src={`${URL}/imgupload/${modalAudio.imageName}`}
+                                alt={modalAudio.audioID}
+                            />
 
-                        <div className='d-flex py-3'>
-                            <div className='info-modal-content'>
-                                <h5 className="title">{modalAudio.title}</h5>
-                                <p className="category"> {modalAudio.categoryName}</p>
-                                <p className="description">{modalAudio.description}</p>
-                            </div>
-                            <div className='info-modal-content'>
-
-                                <audio className="" controls src={`${URL}/audioupload/${modalAudio.filePath}`}></audio>
-
-                                <div className='d-flex'>
-                                    <button
-                                        className='addtolist-button'
-                                        // value={audio.audioID}
-                                        onClick={() => { userAudioIDs.includes(modalAudio.audioID) ? removeFromList(modalAudio.audioID) : addToList(modalAudio.audioID) }}
-                                    >
-                                        {userAudioIDs.includes(modalAudio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
-                                    </button>
-                                    <button
-                                        className='addtolist-button'
-                                        onClick={() => { userFavoriteIDs.includes(modalAudio.audioID) ? removeFromFavoriteList(modalAudio.audioID) : addToFavoriteList(modalAudio.audioID) }}
-                                    >
-                                        {userFavoriteIDs.includes(modalAudio.audioID) ? <i class="fa-solid fa-heart-circle-minus"></i> : <i class="fa-regular fa-heart"></i>}
-                                    </button>
+                            <div className='d-flex py-3'>
+                                <div className='info-modal-content'>
+                                    <h5 className="title">{modalAudio.title}</h5>
+                                    <p className="category"> {modalAudio.categoryName} </p>
+                                    <p className="description">{modalAudio.description}</p>
                                 </div>
+                                <div className='info-modal-content'>
 
-                            </div>
-                        </div>
+                                    <audio className="" controls src={`${URL}/audioupload/${modalAudio.filePath}`}></audio>
 
-                        {audiosByCategory.length > 1 && (
-                            <div className='px-4 py-5'>
-                                <h4 className='mb-4'>Other meditations you might like</h4>
-                                {/* Cards containers in Modal */}
-                                <div className="audio-cards-container">
-                                    {audiosByCategory.filter(categoryAudio => categoryAudio.audioID !== modalAudio.audioID).map((categoryAudio) => (
-                                        <div key={categoryAudio.audioID} className="audio-card">
-                                            <div className="audio-image" style={{ backgroundImage: `url(${URL}/imgupload/${categoryAudio.imageName})` }}>
-                                                <audio className="audio" controls src={`${URL}/audioupload/${categoryAudio.filePath}`}></audio>
-                                                <div className='audio-image-text'>
-                                                    <h5 className='text'>{categoryAudio.title}</h5>
-                                                    <p className='text'>{categoryAudio.categoryName}</p>
-                                                </div>
-                                            </div>
-                                            <div className="audio-details">
-                                                <h3>{categoryAudio.title}</h3>
-                                                <p>{categoryAudio.description}</p>
-                                                <div className='d-flex'>
-                                                    <button
-                                                        className='addtolist-button'
-                                                        // value={audio.audioID}
-                                                        onClick={() => { userAudioIDs.includes(categoryAudio.audioID) ? removeFromList(categoryAudio.audioID) : addToList(categoryAudio.audioID) }}
-                                                    >
-                                                        {userAudioIDs.includes(categoryAudio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
-                                                    </button>
-                                                    <button
-                                                        className='addtolist-button'
-                                                        onClick={() => { userFavoriteIDs.includes(categoryAudio.audioID) ? removeFromFavoriteList(categoryAudio.audioID) : addToFavoriteList(categoryAudio.audioID) }}
-                                                    >
-                                                        {userFavoriteIDs.includes(categoryAudio.audioID) ? <i class="fa-solid fa-heart-circle-minus"></i> : <i class="fa-regular fa-heart"></i>}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
+                                    <div className='d-flex'>
+                                        <button
+                                            className='addtolist-button'
+                                            // value={audio.audioID}
+                                            onClick={() => { userAudioIDs.includes(modalAudio.audioID) ? removeFromList(modalAudio.audioID) : addToList(modalAudio.audioID) }}
+                                        >
+                                            {userAudioIDs.includes(modalAudio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
+                                        </button>
+                                        <button
+                                            className='addtolist-button'
+                                            onClick={() => { userFavoriteIDs.includes(modalAudio.audioID) ? removeFromFavoriteList(modalAudio.audioID) : addToFavoriteList(modalAudio.audioID) }}
+                                        >
+                                            {userFavoriteIDs.includes(modalAudio.audioID) ? <i class="fa-solid fa-heart-circle-minus"></i> : <i class="fa-regular fa-heart"></i>}
+                                        </button>
+                                    </div>
+
                                 </div>
                             </div>
-                        )}
 
-                    </Modal.Body>
-                </Modal>
-            )}
+                            {audiosByCategory.length > 1 && (
+                                <div className='px-4 py-5'>
+                                    <h4 className='mb-4'>Other meditations you might like</h4>
+                                    {/* Cards containers in Modal */}
+                                    <div className="audio-cards-container">
+                                        {audiosByCategory.filter(categoryAudio => categoryAudio.audioID !== modalAudio.audioID).map((categoryAudio) => (
+                                            <div key={categoryAudio.audioID} className="audio-card">
+                                                <div className="audio-image" style={{ backgroundImage: `url(${URL}/imgupload/${categoryAudio.imageName})` }}>
+                                                    <audio className="audio" controls src={`${URL}/audioupload/${categoryAudio.filePath}`}></audio>
+                                                    <div className='audio-image-text'>
+                                                        <h5 className='text'>{categoryAudio.title}</h5>
+                                                        <p className='text'>{categoryAudio.categoryName}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="audio-details">
+                                                    <h3>{categoryAudio.title}</h3>
+                                                    <p>{categoryAudio.description.length > 50 ? categoryAudio.description.substring(0, 50) + "..." : categoryAudio.description}</p>
+                                                    <div className='d-flex'>
+                                                        <button
+                                                            className='addtolist-button'
+                                                            // value={audio.audioID}
+                                                            onClick={() => { userAudioIDs.includes(categoryAudio.audioID) ? removeFromList(categoryAudio.audioID) : addToList(categoryAudio.audioID) }}
+                                                        >
+                                                            {userAudioIDs.includes(categoryAudio.audioID) ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}
+                                                        </button>
+                                                        <button
+                                                            className='addtolist-button'
+                                                            onClick={() => { userFavoriteIDs.includes(categoryAudio.audioID) ? removeFromFavoriteList(categoryAudio.audioID) : addToFavoriteList(categoryAudio.audioID) }}
+                                                        >
+                                                            {userFavoriteIDs.includes(categoryAudio.audioID) ? <i class="fa-solid fa-heart-circle-minus"></i> : <i class="fa-regular fa-heart"></i>}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                        </Modal.Body>
+                    </Modal>
+                )
+            }
 
 
-            {showValidationMessage && (
-                <div className="validation-message" dangerouslySetInnerHTML={{ __html: validationMessage }} />
-            )}
+            {
+                showValidationMessage && (
+                    <div className="validation-message" dangerouslySetInnerHTML={{ __html: validationMessage }} />
+                )
+            }
 
         </div >
     );

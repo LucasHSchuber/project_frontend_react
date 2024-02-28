@@ -15,7 +15,7 @@
     padding: 8em 0;
 }
 
-/* Custom styles for the BeatLoader */
+/* BeatLoader */
 .MoonLoader {
     display: inline-block;
     border: 4px solid #f1f1f1 !important;
@@ -39,11 +39,12 @@
 
 
 
+
 /* index */
 
 .index-wrapper {
     height: fit-content !important;
-    padding: 5em 0 0em 0;
+    padding: 5em 0 0 0;
 }
 
 .index-hero {
@@ -102,20 +103,42 @@
     height: 5em !important;
     outline: none;
     font-weight: 600;
-
 }
 
 .index-input-box input::after {
     background-color: transparent !important;
+}
+
+@media (max-width: 991px) {
+    .index-wrapper {
+        height: fit-content !important;
+        padding: 0 2em 2em 2em;
+    }
+
+    .index-hero {
+        text-align: center;
+    }
+
+    .index-hero h4 {
+        font-size: 1em;
+    }
 
 }
 
+@media (max-width: 772px) {
+    .index-input-box {
+        width: 100% !important;
+    }
+
+    .index-input-box input {
+        width: 100% !important;
+    }
+}
 
 
 
 
 /* login */
-
 
 .login-wrapper {
     height: fit-content !important;
@@ -236,7 +259,7 @@
 
 .hero-details {
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 2;
     transform: translate(-50%, -50%);
     color: white;
@@ -247,7 +270,11 @@
 .hero-part-details {
     opacity: 1;
     height: 5em;
+    min-height: fit-content;
     transition: opacity 3.8s ease, height 2s ease;
+}
+.hero-audio-box{
+    margin-top: 1.2em;
 }
 
 .hero-part-details.hidden {
@@ -255,7 +282,7 @@
 }
 
 .hero-part-details.hiddenbox {
-    height: 1em !important;
+    height: 0 !important;
 }
 
 .hero-details h1 {
@@ -275,14 +302,16 @@
     /* width: 72px;
     height: 70px; */
     /* padding: 1em 1em; */
-
-
 }
 
 /* modal */
 .info-modal {
-    margin-top: 1em !important;
-    margin-right: 20em;
+    position: fixed !important;
+    margin-left: -30em !important;
+}
+
+.info-modal .modal-content {
+    min-width: fit-content;
 }
 
 .info-modal-body {
@@ -305,7 +334,7 @@
     padding: 2em 3em;
 }
 
-.info-modal-content h5 {
+.info-modal-content .title {
     font-size: 2.6em;
     font-weight: 700;
 }
@@ -315,20 +344,59 @@
     font-weight: 500;
 }
 
-
 .info-modal-close {
     position: absolute;
-    top: 5%;
-    right: 3%;
+    top:4%;
+    right: 0;
     transform: translate(-50%, -50%);
     margin: 0;
     padding: 10px;
-    /* background-color: rgba(0, 0, 0, 0.5); */
     color: white;
     z-index: 2;
 }
+/* home modal */
+@media (min-width: 991px) {
+    .info-modal {
+        margin-left: -23em !important;
+    }
+}
 
+@media (max-width: 1050px) {
+    .info-modal {
+        margin-left: -15% !important;
+    }
 
+    .info-modal-body {
+        height: fit-content;
+        width: fit-content !important;
+    }
+
+    .info-modal-content {
+        padding: 1em 2em !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .info-modal {
+        margin-left: 0 !important;
+    }
+    .info-modal-content {
+        padding: 1em 0.5em !important;
+    }
+    .info-modal-content .title {
+        font-size: 1em ;
+        font-weight: 700;
+    }
+
+    .info-modal-content audio {
+        width: 10em !important;
+        padding: 0;
+        margin: 0;
+        height: 3em;
+    }
+}
+
+/* home media query */
 @media (min-width: 1500px) {
     .hero-details {
         left: 20%;
@@ -342,7 +410,6 @@
     .hero-details h1 {
         font-size: 3.2em !important;
     }
-
 }
 
 @media (max-width: 1500px) {
@@ -356,7 +423,6 @@
     .hero-details h1 {
         font-size: 3em !important;
     }
-
 }
 
 @media (max-width: 991px) {
@@ -378,8 +444,6 @@
     .hero-details h1 {
         font-size: 2em !important;
     }
-
-
 }
 
 @media (max-width: 473px) {
@@ -460,11 +524,11 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 160px;
+    height: 180px;
 }
 
 .audio-image {
-    height: 160px;
+    height: 180px;
     background-size: cover;
     background-position: center;
     position: relative;
@@ -490,7 +554,7 @@
 }
 
 .audio-details {
-    margin-top: 20px;
+    padding: 0 1em 0 0.5em !important;
     margin-left: 10px;
     opacity: 0;
     position: absolute;
@@ -506,7 +570,7 @@
 .audio {
     opacity: 0;
     background-color: rgb(241, 241, 241);
-    height: 2.4em !important;
+    height: 2.5em !important;
     width: 100%;
 }
 
@@ -539,7 +603,7 @@
 
 .myaccount-wrapper {
     height: fit-content !important;
-    padding: 1em 10em 18em 10em;
+    padding: 1em 10em 8em 10em;
     background-color: rgb(244, 244, 244) !important;
     color: rgb(79, 79, 79);
 }
@@ -592,7 +656,7 @@
 @media (max-width: 768px) {
     .myaccount-wrapper {
         height: fit-content !important;
-        padding: 1em 1em 10em 1em;
+        padding: 1em 1em 5em 1em;
         background-color: rgb(244, 244, 244) !important;
         color: rgb(79, 79, 79) !important;
     }

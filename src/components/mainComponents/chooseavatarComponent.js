@@ -38,12 +38,10 @@ function ChooseAvatar() {
             const response = await axios.get(`${URL}/${AVATAR_ENDPOINT}`);
             console.log(response.data);
             setAvatars(response.data)
-
         } catch (error) {
             console.log(error);
         }
     }
-
     useEffect(() => {
         chooseAvatar();
     }, [])
@@ -52,33 +50,25 @@ function ChooseAvatar() {
 
     //When user selects an avatar
     const selectedAvatar = async (avatarid) => {
-
         let userid = sessionStorage.getItem("userid");
-        console.log(userid);
-        console.log(avatarid);
-
         try {
             const response = await axios.post(`${URL}/${USER_ENDPOINT}/avatar?avatar=${avatarid}&userid=${userid}`);
             console.log(response.data);
             Navigate("/home");
-
+            window.location.reload();
         } catch (error) {
             console.log(error);
         }
     }
 
-
-    //When user selects an avatar
+    //When user doesnt select an avatar - choose later - btn
     const storeDefaultAvatar = async () => {
-
         let id = sessionStorage.getItem("userid");
-        console.log(id);
-
         try {
             const response = await axios.post(`${URL}/${USER_ENDPOINT}/defaultavatar/${id}`);
             console.log(response.data);
             Navigate("/home");
-
+            window.location.reload();
         } catch (error) {
             console.log(error);
         }
@@ -103,13 +93,11 @@ function ChooseAvatar() {
                             value={avatar.avatarId}
                             // onChange={(e) => setChoosenAvatar(e.target.value)}
                             onClick={() => setChoosenAvatar(avatar.avatarId)}
-
-
                         >
                             <img className={`avatar-image ${chosenAvatar === avatar.avatarId ? 'selected-avatar' : ''}`} src={`${URL}/imgupload/${avatar.avatarImageName}`} alt={avatar.avatarId}
                                 style={{
                                     filter: chosenAvatar === avatar.avatarId ? 'brightness(100%) drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.9))' : 'none',
-                                    transition: 'filter 0.3s ease', 
+                                    transition: 'filter 0.3s ease',
                                 }}
                             />
                         </div>
@@ -120,8 +108,6 @@ function ChooseAvatar() {
                 <button className="normal-button mt-2" type='submit' onClick={() => storeDefaultAvatar()}>Choose later</button>
 
             </div>
-
-
         </div>
     );
 };

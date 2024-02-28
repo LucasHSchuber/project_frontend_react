@@ -42,8 +42,10 @@ function Myaccount() {
 
     const [error, setError] = useState({
         deleteAccount: "",
-        updateAccount: "",
-        updatePersonalInfo: ""
+        updatePassword: "",
+        updatePersonalInfo: "",
+        personalInfoValidation: "",
+        passwordValidation: ""
     })
 
     const { updateAuthStatus } = useAuth();
@@ -80,17 +82,22 @@ function Myaccount() {
             console.log(response.data);
             setOpenModal(!openModal)
             updateAuthStatus(true);
-            setShowValidationMessage(true);
-            setValidationMessage('Avatar updated succesfully <i class="fa-solid fa-check-double"></i>')
-            setTimeout(() => {
-                setShowValidationMessage(false);
-            }, 5000);
             fetchUser();
 
         } catch (error) {
             console.log(error);
         }
     }
+    //reload page after choosen avatar to update header avatar
+    const handleReload = () => {
+        setValidationMessage('Avatar updated succesfully <i class="fa-solid fa-check-double"></i>')
+        setShowValidationMessage(true);
+        setTimeout(() => {
+            setShowValidationMessage(false);
+            window.location.reload();
+        }, 1200);
+    };
+
 
 
     //update user info
@@ -128,9 +135,12 @@ function Myaccount() {
                     }, 5000);
 
                     updateAuthStatus(true);
+                    setError({ ...error, personalInfoValidation: "" });
+
 
                 } catch (error) {
                     console.log(error);
+                    setError({ ...error, personalInfoValidation: error.response.data });
                 }
             } else {
                 console.log("Canceled delete account");
@@ -150,7 +160,7 @@ function Myaccount() {
         };
         console.log(data);
         if (newPassword === "") {
-            setError({ ...error, updateAccount: "Invalid input" });
+            setError({ ...error, updatePassword: "Invalid input" });
             return;
         }
         try {
@@ -165,9 +175,12 @@ function Myaccount() {
             }, 5000);
 
             fetchUser();
+            setError({...error, passwordValidation: ""})
+
 
         } catch (error) {
             console.log(error);
+            setError({...error, passwordValidation: error.response.data})
         }
     };
 
@@ -185,14 +198,14 @@ function Myaccount() {
                 sessionStorage.removeItem('token');
                 sessionStorage.removeItem('userid');
 
-                Navigate("/index");
+                Navigate("/");
 
             } catch (error) {
                 console.log(error);
                 setConfirmPassword("");
                 setError({ ...error, deleteAccount: error.response.data });
             }
-        }else{
+        } else {
             setError({ ...error, deleteAccount: "Invalid input" });
 
         }
@@ -265,6 +278,8 @@ function Myaccount() {
 
 
 
+
+
     return (
         <div className='myaccount-wrapper' id="myaccount-wrapper">
             <div className='container'>
@@ -285,6 +300,15 @@ function Myaccount() {
                     </div>
                     <div className="personal-info">
                         <div className="form-group">
+
+                            {error.personalInfoValidation && (
+                                <div className='d-flex justify-content-end'>
+                                    <ul className='error my-3 mx-5'>
+                                        <li>{error.personalInfoValidation}</li>
+                                    </ul>
+                                </div>
+                            )}
+
                             {userInfo && userInfo.avatar && (
                                 <div key={userInfo.userId}>
                                     <div className='d-flex input-box justify-content-end'>
@@ -301,8 +325,8 @@ function Myaccount() {
                                     </div>
                                     <button className='normal-button my-1' style={{ float: "right" }} onClick={updateUser}>Update</button>
                                 </div>
-
                             )}
+
                         </div>
                     </div>
                     <div className='mt-5 mb-3'>
@@ -324,18 +348,20 @@ function Myaccount() {
                         </div>
                         <div className="security-labels">
                             <div className="form-group">
-                                {/* <div>
-                                    {error.updateAccount && (
-                                        <ul className='error' style={{ float: "right" }}>
-                                            <li>{error.updateAccount}</li>
+
+                                {error.passwordValidation && (
+                                    <div className='d-flex justify-content-end'>
+                                        <ul className='error my-3 mx-5'>
+                                            <li>{error.passwordValidation}</li>
                                         </ul>
-                                    )}
-                                </div> */}
+                                    </div>
+                                )}
+
                                 {userInfo && (
                                     <div key={userInfo.userId} className=''>
                                         <div className='d-flex input-box justify-content-end'>
                                             <label>Password: ******** </label>
-                                            <input className={`account-input mb-3 mb-md-0 ${error.updateAccount ? "error border-error" : ""}`} placeholder={error.updateAccount ? error.updateAccount : "Change password"} type={hidePassword ? "password" : "text"} id="newpassword" name="newpassword" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} onFocus={() => setError({ ...error, updateAccount: "" })}
+                                            <input className={`account-input mb-3 mb-md-0 ${error.updatePassword ? "error border-error" : ""}`} placeholder={error.updatePassword ? error.updatePassword : "Change password"} type={hidePassword ? "password" : "text"} id="newpassword" name="newpassword" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} onFocus={() => setError({ ...error, updatePassword: "" })}
                                             />
                                             <button className='hide-password-toggle' onClick={() => setHidePassword(!hidePassword)}> {hidePassword ? <i class="fa-regular fa-eye"></i> : <i class="fa-regular fa-eye-slash"></i>} </button>
                                         </div>
@@ -388,7 +414,7 @@ function Myaccount() {
                             </div>
                         ))}
                         <div style={{ margin: "0 auto" }}>
-                            <button className="normal-button my-3" type='submit' onClick={() => selectedAvatar(chosenAvatar)}>Choose avatar</button>
+                            <button className="normal-button my-3" type='submit' onClick={() => { selectedAvatar(chosenAvatar); handleReload(); }}>Choose avatar</button>
                         </div>
                     </div>
                 </Modal.Body>

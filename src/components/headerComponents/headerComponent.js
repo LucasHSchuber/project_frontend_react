@@ -5,7 +5,6 @@ import axios from 'axios';
 
 import { useAuth } from '../../assets/js/AuthContext';
 
-
 //import css
 import '../../assets/css/header.css';
 
@@ -23,69 +22,61 @@ import userImg from '../../assets/images/user.png';
 
 //header
 function Header() {
-
   //define states
   const [expanded, setExpanded] = useState(false);
-  // const [token, setToken] = useState("");
   const [user, setUser] = useState([]);
   const [isCaretRotated, setIsCaretRotated] = useState(false);
-
-  // const location = useLocation();
+  const [screenSize, setScreenSize] = useState(true);
 
 
   const { isLoggedIn } = useAuth();
 
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // useEffect(() => {
-  //   setIsLoggedIn(location.state?.loggedIn || false);
-  // }, [location.state]);
 
 
-
-  // //check if logged in
-  // const checkIfTokenExists = () => {
-  //   let getToken = sessionStorage.getItem("token");
-  //   if (getToken) {
-  //     setToken(getToken);
-  //   }
-  // }
-  // useEffect(() => {
-  //   checkIfTokenExists();
-  // }, []);
-  // // Update token state whenever it changes
-  // useEffect(() => {
-  //   checkIfTokenExists();
-  // }, [token]);
-
-
-  console.log(isLoggedIn);
-
+  //fetch and save user to hook
   useEffect(() => {
     //fetch user
     const fetchUser = async () => {
       let id = sessionStorage.getItem("userid");
       console.log(id);
       try {
-          const response = await axios.get(`${URL}/${USER_ENDPOINT}/${id}`);
-          // console.log(response.data);
-          setUser(response.data);
+        const response = await axios.get(`${URL}/${USER_ENDPOINT}/${id}`);
+        // console.log(response.data);
+        setUser(response.data);
 
       } catch (error) {
         console.log(error);
       }
     }
-
     fetchUser();
   }, []);
 
 
+  //check screen size to show/hide avatar-dropdown in header
+  useEffect(() => {
+    const screenSize = () => {
+      setScreenSize(window.innerWidth > 991)
+      console.log(window.innerWidth);
+    }
+    window.addEventListener("resize", screenSize);
+    screenSize();
+  }, [])
 
+
+  // const handleResize = () => {
+  //   console.log('Window width:', window.innerWidth);
+  // };
+
+  // window.addEventListener('resize', handleResize);
+
+
+
+
+  //rotate avatar arrow-down on click
   const handleCaretClick = () => {
     setIsCaretRotated(!isCaretRotated);
   }
-
-
+  //expand dropwdown 
   const handleLinkClick = () => {
     setExpanded(false);
   }
@@ -94,15 +85,15 @@ function Header() {
     <Navbar expanded={expanded} className={`header ${isLoggedIn ? 'loggedin' : ''}`} expand="lg">
       <Container>
         <Navbar.Brand>
-          {isLoggedIn ? (
+          {isLoggedIn ? ( //change direct if loggedin 
             <Nav.Link as={Link} to="/home" className='navbar-brand-link' >
               <img className="logo-img" src={logo} alt="logo img" ></img>
               MindSpace
             </Nav.Link>
-          ) : (
-            <Nav.Link as={Link} to="/index" className='navbar-brand-link' >
+          ) : ( //if not logged in 
+            <Nav.Link as={Link} to="/" className='navbar-brand-link' >
+              <img className="logo-img" src={logo} alt="logo img" ></img>
               MindSpace
-              {/* <img className="logo-img" src={logo} alt="logo img" ></img> */}
             </Nav.Link>
           )}
         </Navbar.Brand>
@@ -115,7 +106,7 @@ function Header() {
 
         <Navbar.Collapse id="responsive-navbar-nav">
 
-          {isLoggedIn ? (
+          {isLoggedIn ? ( //show links in header if logged in
 
             <Nav className="nav-loggedin">
 
@@ -125,46 +116,68 @@ function Header() {
               <Nav.Link as={Link} to="/nature" className='header-link' onClick={handleLinkClick}>
                 Nature
               </Nav.Link>
-              <Nav.Link as={Link} to="/home" className='header-link' onClick={handleLinkClick}>
+              <Nav.Link as={Link} to="/bodyscan" className='header-link' onClick={handleLinkClick}>
                 Body scan
               </Nav.Link>
-              <Nav.Link as={Link} to="/home" className='header-link' onClick={handleLinkClick}>
-                Relaxation
+              <Nav.Link as={Link} to="/talkdown" className='header-link' onClick={handleLinkClick}>
+                Talk down
               </Nav.Link>
 
               <div className='dropdown'>
-                <NavDropdown
-                  title={
-                    user.avatar ? (
-                      <div className='header-avatar-image-box'>
+
+                {screenSize ? (
+                  <NavDropdown
+                    title={
+                      user.avatar ? (
+                        <div className='header-avatar-image-box'>
+                          <img className="header-avatar-image" src={`${URL}/imgupload/${user.avatar.avatarImageName}`} alt="Avatar" />
+                          <i
+                            className={`fa-solid fa-caret-down mx-2 ${isCaretRotated ? 'rotate' : ""}`}
+                            style={{ color: "white" }}></i>
+                        </div>
+                      ) : null
+                    }
+                    id="collapse-nav-dropdown"
+                    className='mx-md-4'
+                    onClick={handleCaretClick}
+                  >
+                    {user.avatar ? (
+                      <>
+                        <NavDropdown.Item as={Link} to="/myaccount"><img src={userImg} alt="user img" className='dropdown-item-icon'></img>Your account</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/mylist"><img src={mylistImg} alt="mylist img" className='dropdown-item-icon'></img>My list</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/myfavorites"><img src={favoritesImg} alt="favorites img" className='dropdown-item-icon'></img>Favorites</NavDropdown.Item>
+                        {/* <NavDropdown.Item as={Link} to="/home"><img src={settingsImg} alt="settings img" className='dropdown-item-icon'></img>Settings</NavDropdown.Item> */}
+                        <hr className='hr-dropdown'></hr>
+                      </>
+                    ) : null}
+                    <NavDropdown.Item as={Link} to="/logout">Logout from MindSpace</NavDropdown.Item>
+                  </NavDropdown>
+                ) : (
+                  <div>
+                    <hr className='hr-dropdown' style={{ marginRight: '0.5em', width: '40%' }}></hr>
+                    <Nav.Link as={Link} to="/myaccount" className='header-link' onClick={handleLinkClick}>
+                      {user.avatar ? (
                         <img className="header-avatar-image" src={`${URL}/imgupload/${user.avatar.avatarImageName}`} alt="Avatar" />
-                        <i
-                          className={`fa-solid fa-caret-down mx-2 ${isCaretRotated ? 'rotate' : ""}`}
-                          style={{ color: "white" }}></i>
-                      </div>
-                    ) : null
-                  }
-                  id="collapse-nav-dropdown"
-                  className='mx-md-4'
-                  onClick={handleCaretClick}
-                >
-                  {user.avatar ? (
-                    <>
-                      <NavDropdown.Item as={Link} to="/myaccount"><img src={userImg} alt="user img" className='dropdown-item-icon'></img>Your account</NavDropdown.Item>
-                      <NavDropdown.Item as={Link} to="/mylist"><img src={mylistImg} alt="mylist img" className='dropdown-item-icon'></img>My list</NavDropdown.Item>
-                      <NavDropdown.Item as={Link} to="/myfavorites"><img src={favoritesImg} alt="favorites img" className='dropdown-item-icon'></img>Favorites</NavDropdown.Item>
-                      {/* <NavDropdown.Item as={Link} to="/home"><img src={settingsImg} alt="settings img" className='dropdown-item-icon'></img>Settings</NavDropdown.Item> */}
-                      <hr className='hr'></hr>
-                    </>
-                  ) : null}
-                  <NavDropdown.Item as={Link} to="/logout">Logout from MindSpace</NavDropdown.Item>
-                </NavDropdown>
+                      ) : (null)}
+                      &nbsp; Your account
+                    </Nav.Link>
+                    <Nav.Link as={Link} to="/mylist" className='header-link' onClick={handleLinkClick}>
+                      My list
+                    </Nav.Link>
+                    <Nav.Link as={Link} to="/myfavorites" className='header-link' onClick={handleLinkClick}>
+                      Favorites
+                    </Nav.Link>
+                    <hr className='hr-dropdown' style={{ marginRight: '0.5em', width: '40%' }}></hr>
+                    <Nav.Link as={Link} to="/logout" className='header-link' onClick={handleLinkClick}>
+                      Log out
+                    </Nav.Link>
+                  </div>
+                )}
               </div>
 
             </Nav>
 
-
-          ) : (
+          ) : ( //show links in header if NOT logged in
 
             <Nav className="mr-auto">
               <Nav.Link as={Link} to="/login" className='header-link' onClick={handleLinkClick}>
@@ -176,7 +189,6 @@ function Header() {
             </Nav>
 
           )}
-
 
         </Navbar.Collapse>
       </Container>

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Howl } from 'howler';
 //import images
 import img1 from '../../assets/images/space2.jpg';
+import logo from '../../assets/images/pray.png';
 // Importing api url and enpoints
 import { URL, USER_ENDPOINT, USERLIST_ENDPOINT, USERAUDIO_ENDPOINT, AUDIO_ENDPOINT } from '../../api';
 //import css
@@ -103,9 +104,6 @@ function Nature() {
 
 
 
-
-
-
     return (
         <div className='mylist-wrapper' id="mylist-wrapper" >
             <div className='mylist-content'>
@@ -121,12 +119,12 @@ function Nature() {
                                 <audio className="audio" controls src={`${URL}/audioupload/${audio.filePath}`}></audio>
                                 <div className='audio-image-text'>
                                     <h5 className='text'>{audio.title}</h5>
-                                    <p className='text'>{audio.categoryName}</p>
+                                    <p className='text'>  <img className="" style={{ width: "18px", marginBottom: "0.4em" }} src={logo} alt="logo img" ></img> {audio.categoryName}</p>
                                 </div>
                             </div>
                             <div className="audio-details">
                                 <h3>{audio.title}</h3>
-                                <p>{audio.description}</p>
+                                <p>{audio.description.length > 50 ? audio.description.substring(0, 50) + "..." : audio.description}</p>
                                 <div className='d-flex'>
                                     <button
                                         // value={audio.audioID}
@@ -149,7 +147,5 @@ function Nature() {
             </div>
         </div>
     );
-
 }
-
 export default Nature;

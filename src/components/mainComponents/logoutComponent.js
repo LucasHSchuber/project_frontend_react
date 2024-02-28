@@ -26,12 +26,12 @@ function Logout() {
             sessionStorage.removeItem('token');
             sessionStorage.removeItem('userid');
 
-            // Update authentication status in AuthContext
-            updateAuthStatus(false);
-
             setTimeout(() => {
                 setLoading(false);
-                Navigate('/index');
+                Navigate('/');
+                window.location.reload();
+                // Update authentication status in AuthContext
+                updateAuthStatus(false);
             }, 2000);
         };
 

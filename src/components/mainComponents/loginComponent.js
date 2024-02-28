@@ -31,7 +31,6 @@ import '../../assets/css/global.css';
 
 //start apge
 function Login() {
-
   //define states
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,6 +38,14 @@ function Login() {
   const [error, setError] = useState("");
 
   const Navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    // Check if location.state._email exists
+    if (location.state && location.state._email) {
+      setEmail(location.state._email);
+    }
+  }, [location.state]);
+
   const { updateAuthStatus } = useAuth();
 
 
@@ -193,7 +200,7 @@ function Login() {
       } else {
         // Navigate('/home');
         Navigate('/home', { state: { loggedIn: true } });
-
+        window.location.reload();
       }
 
     } catch (error) {

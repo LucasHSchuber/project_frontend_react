@@ -116,8 +116,8 @@ button.navbar-toggler:focus {
     margin-right: 0.8em;
 }
 
-.hr {
-    border: rgb(44, 44, 44) solid 1px;
+.hr-dropdown {
+    border: rgba(69, 69, 69, 0.5) solid 1px;
     margin-top: 0.6em !important;
     margin-bottom: 0.6em !important;
 }
@@ -140,9 +140,9 @@ button.navbar-toggler:focus {
     }
 
     .navbar-nav {
-        padding: 2em 0;
+        padding: 2em 0 4em 0;
         /* border-bottom: 0.5px rgb(161, 161, 161) solid; */
-        height: 50vh;
+        height: 100vh;
     }
 
     .navbar-collapse {
@@ -165,6 +165,7 @@ button.navbar-toggler:focus {
         border-bottom: none;
         transition: 0.2s;
     }
+
 
     .header-link:hover {
         color: rgb(159, 159, 159) !important;
