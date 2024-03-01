@@ -22,15 +22,9 @@ import Bodyscan from "./components/mainComponents/bodyscanComponent";
 import Talkdown from "./components/mainComponents/talkdownComponent";
 
 
-
-
 function App() {
-
-
+  //user id from sessionstorage
   const userId = sessionStorage.getItem('userid');
-
-
-
 
   return (
     <div className="gradient-container">
@@ -39,7 +33,7 @@ function App() {
         <AuthProvider>
           <div className="App">
             <Header />
-{/* 
+            {/* 
             {!userId && (
               <>
                 <div className=''>
@@ -112,7 +106,7 @@ function App() {
 
               // <Navigate to="/login" replace />
 
-                     <>
+              <>
                 <div className=''>
                   <Routes>
                     <Route path="/" element={<Index />} />
@@ -130,7 +124,7 @@ function App() {
                 </div>
 
               </>
-              
+
 
             )}
             <Footer />
