@@ -264,6 +264,18 @@
     transform: translate(-50%, -50%);
     color: white;
     max-width: 90%;
+    /* min-width: 40em !important; */
+    text-align: left;
+}
+
+.playing-soundwave-hero {
+    position: absolute;
+    top: 45%;
+    right: 10%;
+    transform: translate(-50%, -50%);
+    color: white;
+    max-width: 90%;
+    /* min-width: 40em !important; */
     text-align: left;
 }
 
@@ -273,7 +285,8 @@
     min-height: fit-content;
     transition: opacity 3.8s ease, height 2s ease;
 }
-.hero-audio-box{
+
+.hero-audio-box {
     margin-top: 1.2em;
 }
 
@@ -346,7 +359,7 @@
 
 .info-modal-close {
     position: absolute;
-    top:4%;
+    top: 4%;
     right: 0;
     transform: translate(-50%, -50%);
     margin: 0;
@@ -354,6 +367,14 @@
     color: white;
     z-index: 2;
 }
+
+.soundwave-playing-modal {
+    position: absolute;
+    bottom: 4%;
+    right: 0;
+
+}
+
 /* home modal */
 @media (min-width: 991px) {
     .info-modal {
@@ -380,11 +401,13 @@
     .info-modal {
         margin-left: 0 !important;
     }
+
     .info-modal-content {
         padding: 1em 0.5em !important;
     }
+
     .info-modal-content .title {
-        font-size: 1em ;
+        font-size: 1em;
         font-weight: 700;
     }
 
@@ -525,6 +548,12 @@
     flex-direction: column;
     position: relative;
     height: 180px;
+}
+
+.playing-soundwave-cards {
+    float: right;
+    margin-right: 1em;
+    margin-top: 1em;
 }
 
 .audio-image {

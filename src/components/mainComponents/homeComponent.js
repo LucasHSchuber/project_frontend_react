@@ -8,6 +8,7 @@ import { Modal } from 'react-bootstrap';
 //import images
 import img1 from '../../assets/images/space2.jpg';
 import logo from '../../assets/images/pray.png';
+import sound from '../../assets/images/sound.png';
 
 //import gifs
 // import gif1 from '../../assets/gifs/soundwave.gif';
@@ -33,6 +34,7 @@ function Home() {
     const [showHeroDetails, setShowHeroDetails] = useState(true);
     const [minimizeBox, setMinimizeBox] = useState(true);
     const [playingAudio, setPlayingAudio] = useState("");
+    const [playingAudioList, setPlayingAudioList] = useState([]);
     const [audiosByCategory, setAudiosByCategory] = useState([]);
     const [randomInt, setRandomInt] = useState(0);
     const [screenSize, setScreenSize] = useState(0);
@@ -233,19 +235,28 @@ function Home() {
 
     // autoplay audio 
     const handleAudioPlay = (audioid) => {
-        if (playingAudio !== null && playingAudio !== audioid) {
-            console.log("Audio file has changed");
-            setPlayingAudio(null);
+        if (!playingAudioList.includes(audioid)) {
+            console.log("Music started playing" + audioid);
+            setPlayingAudio(audioid);
+            setPlayingAudioList([...playingAudioList, audioid]);
         }
+
         console.log("Music started playing" + audioid);
-        setPlayingAudio(audioid);
     };
     const handleAudioPause = (audioid) => {
-        console.log("Music paused playing" + audioid);
-        setPlayingAudio(null);
+        if (playingAudioList.includes(audioid)) {
+            console.log("Music paused playing" + audioid);
+            const audioElement = document.getElementById(`${audioid}`);
+            if (audioElement) {
+                audioElement.pause(); // Pause the audio
+            }
+           
+      
+            setPlayingAudio(null);
+            setPlayingAudioList(playingAudioList.filter(id => id !== audioid)); // Remove audioid from list
+        }
     };
-
-
+    console.log(playingAudioList);
 
     //get random int to display on hero
     useEffect(() => {
@@ -296,11 +307,6 @@ function Home() {
 
                         <div className='d-flex'>
                             <h2>{audios[randomInt].title}</h2>
-                            {/* <div>
-                                {playingAudio === audios[randomInt].audioID && (
-                                    <iframe className='soundwave-gif' style={{ marginTop: "1em" }} src="https://giphy.com/embed/CpDS8OlJaV3MLsjROZ" width="40" height="30" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-                                )}
-                            </div> */}
                         </div>
 
                         <div className={`hero-part-details ${!showHeroDetails ? 'hidden' : ''} ${!minimizeBox ? 'hiddenbox' : ''}`} id='hero-part-details'>
@@ -309,7 +315,7 @@ function Home() {
                         </div>
 
                         <div className='hero-audio-box'>
-                            <audio id="hero-audio" className={`hero-audio ${!minimizeBox ? 'hiddenbox' : ''}`} controls autoPlay src={`${URL}/audioupload/${audios[randomInt].filePath}`}
+                            <audio id={audios[randomInt].audioID} className={`hero-audio ${!minimizeBox ? 'hiddenbox' : ''}`} controls autoPlay src={`${URL}/audioupload/${audios[randomInt].filePath}`}
                                 onPause={() => handleAudioPause(audios[randomInt].audioID)}
                                 onPlay={() => handleAudioPlay(audios[randomInt].audioID)}
                             ></audio>
@@ -342,6 +348,11 @@ function Home() {
                         </div>
 
                     </div>
+                    <div className='playing-soundwave-hero' style={{ opacity: playingAudio === audios[randomInt].audioID ? 1 : 0, transition: 'opacity 0.5s' }}>
+                        {playingAudioList.includes(audios[randomInt].audioID) && (
+                            <img src={sound} alt={sound} style={{ width: "60px" }}></img>
+                        )}
+                    </div>
                 </div>
             )}
 
@@ -353,13 +364,18 @@ function Home() {
                     {audios.map((audio) => (
                         <div key={audio.audioID} className="audio-card">
                             <div className="audio-image" style={{ backgroundImage: `url(${URL}/imgupload/${audio.imageName})` }}>
-                                <audio className="audio" controls src={`${URL}/audioupload/${audio.filePath}`}
-                                    onPause={() => handleAudioPause(audio.filePath)}
-                                    onPlay={() => handleAudioPlay(audio.filePath)}
+                                <audio className="audio" id={audio.audioID} controls src={`${URL}/audioupload/${audio.filePath}`}
+                                    onPause={() => handleAudioPause(audio.audioID)}
+                                    onPlay={() => handleAudioPlay(audio.audioID)}
                                 ></audio>
                                 <div className='audio-image-text'>
                                     <h5 className='text'>{audio.title}</h5>
                                     <p className='text'>  <img className="" style={{ width: "18px", marginBottom: "0.4em" }} src={logo} alt="logo img" ></img> {audio.categoryName}</p>
+                                </div>
+                                <div className='playing-soundwave-cards' style={{ opacity: playingAudioList.includes(audio.audioID) ? 1 : 0, transition: 'opacity 0.5s' }}>
+                                    {playingAudioList.includes(audio.audioID) && (
+                                        <img src={sound} alt={sound} style={{ width: "30px" }}></img>
+                                    )}
                                 </div>
                             </div>
                             <div className="audio-details">
@@ -522,7 +538,6 @@ function Home() {
                             >
                                 <i style={{ color: "white" }} class="fa-solid fa-xmark"></i>
                             </button>
-
                             <img
                                 src={`${URL}/imgupload/${modalAudio.imageName}`}
                                 alt={modalAudio.audioID}

@@ -194,9 +194,9 @@ function Login() {
       updateAuthStatus(true);
 
       //redirect user to home or ChooseAvatar
-      if (response.data.avatarId == null && response.data.imageName == null) {
-        chooseAvatar();
+      if (response.data.avatarId == 1 && response.data.imageName == null) {
         Navigate("/chooseavatar");
+        window.location.reload();
       } else {
         // Navigate('/home');
         Navigate('/home', { state: { loggedIn: true } });

@@ -104,7 +104,7 @@ function ChooseAvatar() {
                     ))}
                 </div>
 
-                <button className="gradient-button mt-5" type='submit' onClick={() => selectedAvatar(chosenAvatar)}>Choose avatar</button>
+                <button className="gradient-button" type='submit' onClick={() => selectedAvatar(chosenAvatar)}>Choose avatar</button>
                 <button className="normal-button mt-2" type='submit' onClick={() => storeDefaultAvatar()}>Choose later</button>
 
             </div>
