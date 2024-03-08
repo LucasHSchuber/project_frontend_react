@@ -47,6 +47,7 @@ function Footer() {
                             <Link to="/nature" className='footer-link'>Nature</Link>
                             <Link to="/bodyscan" className='footer-link'>Body Scan</Link>
                             <Link to="/talkdown" className='footer-link'>Talk down</Link>
+                            <Link to="/guided" className='footer-link'>Guided</Link>
                             <Link to="/myaccount" className='footer-link'>Your Account</Link>
                             <Link to="/mylist" className='footer-link'>My List</Link>
                             <Link to="/myfavorites" className='footer-link'>Favorites</Link>

@@ -56,7 +56,7 @@ function Index() {
             <img src={img1} className="bg-video" alt='bg video' style={{ opacity: '0.9' }}></img>
 
             <div className='index-hero'>
-                <h1 className='my-3'>Unlimited meditations, whenever and wherever you want.</h1>
+                <h1 className='my-3'>Unlimited mindfulness, whenever and wherever you want.</h1>
                 <h4 className='mb-4'>Ready to start? Enter you're email to create or login to your account.</h4>
 
                 <form className="index-form" onSubmit={checkEmail}>

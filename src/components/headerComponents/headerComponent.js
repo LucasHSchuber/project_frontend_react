@@ -121,6 +121,9 @@ function Header() {
               </Nav.Link>
               <Nav.Link as={Link} to="/talkdown" className='header-link' onClick={handleLinkClick}>
                 Talk down
+              </Nav.Link> 
+               <Nav.Link as={Link} to="/guided" className='header-link' onClick={handleLinkClick}>
+                Guided
               </Nav.Link>
 
               <div className='dropdown'>

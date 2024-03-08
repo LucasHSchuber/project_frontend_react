@@ -20,6 +20,7 @@ import Nature from "./components/mainComponents/natureComponent";
 import Myfavorite from "./components/mainComponents/myfavoritesComponent";
 import Bodyscan from "./components/mainComponents/bodyscanComponent";
 import Talkdown from "./components/mainComponents/talkdownComponent";
+import Guided from "./components/mainComponents/guidedComponent";
 
 
 function App() {
@@ -99,6 +100,11 @@ function App() {
                 <div className=''>
                   <Routes>
                     <Route path="/talkdown" element={<Talkdown />} />
+                  </Routes>
+                </div>
+                <div className=''>
+                  <Routes>
+                    <Route path="/guided" element={<Guided />} />
                   </Routes>
                 </div>
               </>

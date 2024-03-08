@@ -70,16 +70,17 @@ function Home() {
 
         let id = sessionStorage.getItem("userid");
         console.log(id);
+        
 
         try {
-            const response = await axios.get(`${URL}/${USERAUDIO_ENDPOINT}/${id}`);
-            console.log(response.data);
-            const addedAudioIDs = response.data.map(userAudio => userAudio.audioId);
-            setUserAudioIDs(addedAudioIDs);
+                const response = await axios.get(`${URL}/${USERAUDIO_ENDPOINT}/${id}`);
+                console.log(response.data);
+                const addedAudioIDs = response.data.map(userAudio => userAudio.audioId);
+                setUserAudioIDs(addedAudioIDs);
 
-        } catch (error) {
-            console.log(error);
-        }
+            } catch (error) {
+                console.log(error);
+            }
     }
     //adds an audio to the list
     const addToList = async (audioid) => {
@@ -250,8 +251,8 @@ function Home() {
             if (audioElement) {
                 audioElement.pause(); // Pause the audio
             }
-           
-      
+
+
             setPlayingAudio(null);
             setPlayingAudioList(playingAudioList.filter(id => id !== audioid)); // Remove audioid from list
         }
@@ -515,8 +516,6 @@ function Home() {
                         ))
                     }
                 </div>
-
-
             </div>
 
 

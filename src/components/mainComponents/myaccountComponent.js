@@ -103,6 +103,7 @@ function Myaccount() {
     //update user info
     const updateUser = async () => {
         let id = sessionStorage.getItem("userid");
+        let token = sessionStorage.getItem("token");
         const data = {
             UserId: id,
             Email: newEmail,
@@ -121,7 +122,11 @@ function Myaccount() {
                 (newName != "" ? "New name: " + newName + "\n" : "")
             )) {
                 try {
-                    const response = await axios.put(`${URL}/${USER_ENDPOINT}/${id}`, data);
+                    const response = await axios.put(`${URL}/${USER_ENDPOINT}/${id}`, data, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
                     console.log(response.data);
                     setNewEmail("");
                     setNewName("");
@@ -154,6 +159,7 @@ function Myaccount() {
     //update user password
     const updatePassword = async () => {
         let id = sessionStorage.getItem("userid");
+        let token = sessionStorage.getItem("token");
         const data = {
             UserId: id,
             PasswordHash: newPassword
@@ -164,7 +170,11 @@ function Myaccount() {
             return;
         }
         try {
-            const response = await axios.put(`${URL}/${USER_ENDPOINT}/${id}`, data);
+            const response = await axios.put(`${URL}/${USER_ENDPOINT}/${id}`, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             console.log(response.data);
             setNewPassword("");
 
@@ -175,12 +185,12 @@ function Myaccount() {
             }, 5000);
 
             fetchUser();
-            setError({...error, passwordValidation: ""})
+            setError({ ...error, passwordValidation: "" })
 
 
         } catch (error) {
             console.log(error);
-            setError({...error, passwordValidation: error.response.data})
+            setError({ ...error, passwordValidation: error.response.data })
         }
     };
 
@@ -190,15 +200,21 @@ function Myaccount() {
     //delete user account
     const deleteAccount = async () => {
         let id = sessionStorage.getItem("userid");
+        let token = sessionStorage.getItem("token");
         if (confirmPassword !== null && confirmPassword !== "") {
             try {
-                const response = await axios.delete(`${URL}/${USER_ENDPOINT}/${id}?passwordConfirm=${confirmPassword}`);
+                const response = await axios.delete(`${URL}/${USER_ENDPOINT}/${id}?passwordConfirm=${confirmPassword}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 console.log(response.data);
 
                 sessionStorage.removeItem('token');
                 sessionStorage.removeItem('userid');
 
-                Navigate("/");
+                Navigate('/', { state: { loggedIn: false } });
+                window.location.reload();
 
             } catch (error) {
                 console.log(error);
