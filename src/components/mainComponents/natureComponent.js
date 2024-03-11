@@ -357,10 +357,10 @@ function Nature() {
                 </div>
             </div>
 
-
             {openModal && (
                 <AudioInfoModal
                     openModal={openModal}
+                    setOpenModal={setOpenModal}
                     openInfoModal={openInfoModal}
                     modalAudio={modalAudio}
                     setAudiosByCategory={setAudiosByCategory}
@@ -374,7 +374,6 @@ function Nature() {
                     URL={URL}
                 />
             )}
-
 
             {
                 showValidationMessage && (

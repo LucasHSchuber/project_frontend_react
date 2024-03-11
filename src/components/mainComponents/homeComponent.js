@@ -523,6 +523,7 @@ function Home() {
             {openModal && (
                 <AudioInfoModal
                     openModal={openModal}
+                    setOpenModal={setOpenModal}
                     openInfoModal={openInfoModal}
                     modalAudio={modalAudio}
                     setAudiosByCategory={setAudiosByCategory}
