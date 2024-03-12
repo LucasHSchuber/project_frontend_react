@@ -75,10 +75,10 @@ function Index() {
                 </form>
             </div>
 
-            <div class="index-content">
+            {/* <div class="index-content">
                 <h1>Test</h1>
                 <p>test</p>
-            </div>
+            </div> */}
 
         </div>
     );
