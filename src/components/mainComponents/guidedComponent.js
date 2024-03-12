@@ -301,7 +301,7 @@ function Guided() {
             <div className='mylist-content'>
 
                 <div className='container mb-5'>
-                    <h4>Body scan</h4>
+                    <h4>Guided</h4>
                 </div>
 
                 <div className="audio-cards-container container">
