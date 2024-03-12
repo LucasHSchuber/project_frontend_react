@@ -452,7 +452,7 @@ function Myaccount() {
                         <h6>To delete your account enter your password and press "delete account" button</h6>
                         <p><em>This action can not be undone</em></p>
                         <input className={`account-input mb-3 mb-md-0 ${error.deleteAccount ? "error border-error" : ""}`} placeholder={error.deleteAccount ? error.deleteAccount : "Your password"} type="password" id="confirmpassword" name="confirmpassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} onFocus={() => setError({ ...error, deleteAccount: "" })} />
-                        {error.deleteAccount == "Incorrect password" && (
+                        {error.deleteAccount === "Incorrect password" && (
                             <ul className='error my-2'>
                                 <li>{error.deleteAccount}</li>
                             </ul>
