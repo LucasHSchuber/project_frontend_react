@@ -303,6 +303,7 @@ function Newaccount() {
             Log in here!
           </Nav.Link>
         </div>
+        
 
         {/* <KeyboardSoundEffect />
         <KeyboardSoundEffect2 />

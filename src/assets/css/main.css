@@ -198,8 +198,9 @@
 }
 
 .create-account-section {
-    margin-top: 20px;
-    text-align: left;
+    margin-top: 10px;
+    width: 100%;
+
 }
 
 .create-account-section p {

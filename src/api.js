@@ -4,6 +4,7 @@
 // export const BASE_URL = 'https://aradalenapi.azurewebsites.net/';
 // api.js local
 
+//URL and ENPOINTS for local developing
 // export const URL = 'http://localhost:5111'
 // export const AUDIO_ENDPOINT = "api/audioapi";
 // export const USER_ENDPOINT = 'api/userapi';
@@ -12,6 +13,7 @@
 // export const USERAUDIO_ENDPOINT = 'api/useraudioapi';
 // export const LIKE_ENDPOINT = 'api/likeapi';
 
+//URL and ENPOINTS for publish
 export const URL = 'https://mindspaceadminapp.azurewebsites.net'
 export const AUDIO_ENDPOINT = "api/audioapi";
 export const USER_ENDPOINT = 'api/userapi';
