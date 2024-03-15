@@ -16,5 +16,9 @@
 ###### 'api/likeapi';
 
 ##### FEEL FREE TO TEST AND TRY
+###### To get client running;
+###### - clone repo 
+###### > cd repository-name (to enter directory)
+###### > npm install (to install project dependecies)
+###### > npm start (to start development server on localhost)
 
- 
